@@ -7,3 +7,6 @@ class HomeView(View):
         pass
     def get(self,request):
         return render(request,'UI/home.html')
+
+def choices(request):
+    return render(request,'UI/choices.html')

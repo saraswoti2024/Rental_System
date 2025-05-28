@@ -1,17 +1,38 @@
 .navbar{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     background-color: gainsboro;
 }
 
 .navbar2{
     display: flex;
-    gap: 70px;
+    gap: 20px;
+}
+.logo{
+    margin-bottom: 10px;
+    font-size: 25px;
 }
 
+
+.navtitle{
+    font-size: 12px;
+    margin-top: 20px;
+    padding-right: 10px;
+}
 .navtitle:hover{
-    color: blue;
+    color: rgb(209, 93, 209);
     cursor: pointer;
+}
+
+.navbar2 a{
+    text-decoration: none;
+    color: black;
+}
+
+.navtitle1{
+    font-size: 15px;
+    margin-top: 20px;
+
 }
 
 .h1{
@@ -20,4 +41,217 @@
 
 .searchbar{
     display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
 }
+
+.search {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 900px;
+  }
+  
+  .searchbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .field {
+    flex: 1 1 200px;
+    position: relative;
+  }
+  
+  .icon-input input {
+    padding-left: 35px; /* space for icon */
+  }
+  
+  .icon-input i {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #555;
+    font-size: 16px;
+  }
+  
+  .search input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  .search button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .search button:hover {
+    background-color: #0056b3;
+  }
+  
+  .icon-input input {
+    padding-left: 45px;
+  }
+  
+  .icon-input i {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #555;
+  }
+  
+.carousel{
+    position: relative;
+}
+.carousel-inner {
+    height: 500px; /* Set desired height */
+  }
+  
+  .carousel-inner img {
+    height: 100%;
+    object-fit: cover; /* or use 'contain' for fitting inside */
+  }
+  
+.card-inner{
+    display: flex;
+    justify-content: space-around;
+    margin-left: -10px;
+}
+
+.card{
+    border: 2px solid black;
+    position: relative;
+    width: 20%;
+    margin: 25px;
+}
+
+.location{
+    padding-left: 15px;
+}
+
+.feature-topic{
+    padding-left: 15px;
+}
+
+
+.featured{
+    margin: 10px;
+}
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 15px;
+}
+
+.f-title{
+    margin: 10px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.card img{
+    width: 100%;                 /* Image stays within card */
+    height: auto; 
+    display: block;              /* Remove extra spacing */
+    object-fit: cover;  
+}
+
+/* footer */
+.footer {
+    background-color: #1e1e2f;
+    color: #ffffff;
+    padding: 40px 20px 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .footer-section {
+    flex: 1 1 220px;
+  }
+  
+  .footer-section h4 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #f1c40f;
+  }
+  
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-section ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  .footer-section ul li a:hover {
+    color: #f1c40f;
+  }
+  
+  .footer-section p {
+    margin: 5px 0;
+  }
+  
+  .social a {
+    margin-right: 10px;
+    font-size: 20px;
+    color: #ffffff;
+    text-decoration: none;
+  }
+  
+  .social a:hover {
+    color: #f1c40f;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #444;
+    font-size: 14px;
+  }
+  
+
+  .navbutton{
+    margin: -2px;
+    width: 100px;
+    margin-top: 7px;
+    height: 40px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  .navtitle2{
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  .request{
+    margin-right: 70px;
+  }
