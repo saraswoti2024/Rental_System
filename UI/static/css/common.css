@@ -1,0 +1,23 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    background-color: gainsboro;
+}
+
+.navbar2{
+    display: flex;
+    gap: 70px;
+}
+
+.navtitle:hover{
+    color: blue;
+    cursor: pointer;
+}
+
+.h1{
+    background-color: rebeccapurple;
+}
+
+.searchbar{
+    display: flex;
+}

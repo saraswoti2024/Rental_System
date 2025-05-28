@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+</head>
+<body>
+    <!-- navbar starts-->
+     <div class="navbar">
+        <h1>RENTAL SERVICE</h1>
+        <div class="navbar2">
+            <h2 class="navtitle">Home</h2>
+            <h2 class="navtitle">About US</h2>
+            <h2 class="navtitle">contact us</h2>
+            <h2 class="navtitle">Register</h2>
+            <h2 class="navtitle">Login</h2>
+        </div>
+     </div>
+
+     <div class="carousel">
+       <form action="" class="searchbar">
+        <div class="field">
+            <input type="text" placeholder="search by title">
+        </div>
+        <div class="field">
+            <input type="text" placeholder="search by location">
+        </div>
+        <div class="field">
+            <input type="text" placeholder="price range">
+        </div>
+        <div class="field">
+            <input type="text" placeholder="property type">
+        </div>
+        <div class="field">
+            <button type="submit">Search</button>
+        </div>
+       </form>    
+        </div>
+     </div>
+
+     <!-- navbar ends -->
+    {% block content %}
+      
+    {% endblock content %}
+    <!-- footer starts -->
+     <!-- footer ends -->
+</body>
+</html>
