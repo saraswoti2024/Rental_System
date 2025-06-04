@@ -11,13 +11,31 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 import re
+from UI.views import HomeView
 # Create your views here.
 class Log_in(View):
     def get(self,request):
         return render(request,'accounts/log_in.html')
 
     def post(self,request):
-        pass
+        try: 
+            uname = request.POST['username']
+            password = request.POST['password']
+            if not CustomUser.objects.filter(username=uname).exists():
+                messages.error(request,'username doesnot exists!')
+                return redirect('log_in')
+            else:
+                value = authenticate(username=uname,password=password)
+                if value is not None:
+                    login(request,value)
+                else:
+                    messages.error(request,'password is not valid!')
+                    return redirect('log_in')
+        except Exception as e:
+            messages.error(request,f'{str(e)}')
+            return redirect('log_in')
+        return redirect('home')
+        
 
 
 class Register1(View):
@@ -50,13 +68,4 @@ class Register1(View):
             messages.error(request,f'{str(e)}')
             return redirect('register1')
         
-            
-
-
         
-
-class Register2(View):
-    def get(self,request):
-        return render(request,'accounts/register2.html')
-    def post(self,request):
-        pass

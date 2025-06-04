@@ -1,12 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>login page</h1>
+{% extends "common.html" %}
+{% block content %}
+{% load static %}
+<!-- Login Section -->
+<section class="reg d-flex align-items-center justify-content-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-10 col-lg-4 m-3 p-3">
+        <div class="cardss">
+          <h2 class="text-center mb-4 fw-bold">Login</h2>
+          <form action="{% url 'log_in' %}" method="POST" class="login-form">
+            {% csrf_token %}
+            {% if messages %}
+            {% for m in messages  %}
+              <div class="alert alert-{{m.tags}}">{{m|safe}}</div>
+            {% endfor %}
+            {% endif %}
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" id="username" name="username" class="form-control rounded-3" placeholder="john_doe" required />
+            </div>
+            <div class="mb-3">
+            <input type="hidden" name= "next" value="{{next}}">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" id="password" name="password" class="form-control rounded-3" placeholder="********" required />
+            </div>
+         
+            <button type="submit" class="btn btn-primary w-100 rounded-3">Login</button>
+          </form>
+          <div class="text-center mt-3">
+            <p>Don't have an account? <a href="{% url 'register1' %}" class="text-decoration-none">Register</a></p>
+            <p><a href="#" class="text-decoration-none">Forgot Password?</a></p>
+          </div>
+        </div>
+      </div>
     
-</body>
-</html>
+    </div>
+  </div>
+</section>
+{% endblock content %}
