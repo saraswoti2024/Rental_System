@@ -1,3 +1,9 @@
 from django.contrib import admin
+from .models import *
+# Register your mocdels here.
 
-# Register your models here.
+admin.site.register(Choice1)
+
+@admin.register(Featured)
+class Featured(admin.ModelAdmin):
+    list_display = ['title','address','property_type','price']

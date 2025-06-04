@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-
+from .models import *
 # Create your views here.
 class HomeView(View):
     def post(self,request):
@@ -10,3 +10,7 @@ class HomeView(View):
 
 def choices(request):
     return render(request,'UI/choices.html')
+
+def common(request):
+    data = Choice1.objects.all()
+    return render(request,'UI/common.html',{'nav': data})

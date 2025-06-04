@@ -21,13 +21,12 @@
         <h1 class="logo">RENTAL SERVICE</h1>
         <div class="navbar2">
             <a href="{% url 'home' %}"><h2 class="navtitle">HOME</h2></a>
-            <h2 class="navtitle">HOUSE</h2>
-            <h2 class="navtitle">FLATS & APARTMENTS</h2>
-            <h2 class="navtitle">ROOMS</h2>
-            <h2 class="navtitle">LAND</h2>
-            <h2 class="navtitle">SHUTTERS & SHOP</h2>
-            <h2 class="navtitle">OFFICE SPACE</h2>
+            {% for i in nav  %}    
+                          
+            <h2 class="navtitle">{{i.choice}}</h2>
+            {% endfor %}
             <h2 class="navtitle">ABOUT US</h2>
+
             <div class="request">
             <button class="navbutton"><h2 class="navtitle2">Find me Room</h2></button>
             <button class="navbutton"><h2 class="navtitle2" >Shift Home</h2></button>
