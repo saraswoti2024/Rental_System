@@ -4,4 +4,5 @@ urlpatterns = [
     path('home/',HomeView.as_view(),name='home'),
     path('choices/',choices,name="choices"),
     path('choices/',common,name='common'),
+    path('request/',request_room_view,name="request_room"),
 ]

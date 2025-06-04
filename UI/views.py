@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views import View
 from .models import *
+from django.contrib import messages
 # Create your views here.
 class HomeView(View):
     def post(self,request):
@@ -14,3 +15,24 @@ def choices(request):
 def common(request):
     data = Choice1.objects.all()
     return render(request,'UI/common.html',{'nav': data})
+
+def request_room_view(request):
+    try:
+        if request.method == 'POST':
+            fname = request.POST['fullname']
+            phone = request.POST['phone']        
+            email = request.POST['email']        
+            message = request.POST['message']        
+            area = request.POST['area']        
+            propertytype = request.POST['propertytype']        
+            location = request.POST['location'] 
+            data = RequestRoom(fullname=fname,phone=phone,email=email,message=message,property=propertytype,area=area,location=location)
+            data.full_clean()
+            data.save()
+            messages.success(request,'form submitted successfully!')
+            return redirect('request_room')
+
+    except Exception as e:
+        messages.error(request,f'{str(e)}')
+        return redirect('request_room')       
+    return render(request,'UI/request.html')
