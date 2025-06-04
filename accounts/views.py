@@ -67,5 +67,8 @@ class Register1(View):
         except Exception as e:
             messages.error(request,f'{str(e)}')
             return redirect('register1')
-        
+
+def log_out(request):
+    logout(request)
+    return redirect('log_in')
         
