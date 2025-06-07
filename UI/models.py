@@ -8,18 +8,19 @@ class Choice1(models.Model):
     def __str__(self):
         return self.choice
 
-class Featured(models.Model):
+class property_post(models.Model):
     title = models.CharField(max_length=60)
     address = models.CharField(max_length=60)
     property_type = models.ForeignKey(Choice1,on_delete=models.CASCADE)
     price = models.IntegerField()
+    extra_info = models.TextField()
 
     def __str__(self):
         return self.title
 
 class RequestRoom(models.Model):
     fullname = models.CharField(max_length=100)
-    phone = PhoneNumberField(null=True)
+    phone = models.IntegerField(null=True)
     email = models.EmailField()
     location = models.CharField(max_length=200)
     property = models.CharField(max_length=200)
@@ -29,7 +30,7 @@ class RequestRoom(models.Model):
 
 class ShiftHome(models.Model):
     fullname = models.CharField(max_length=100)
-    phone = PhoneNumberField(null=True)
+    phone = models.IntegerField(null=True)
     email = models.EmailField()
     location1 = models.CharField(max_length=200)
     location2 = models.CharField(max_length=200)

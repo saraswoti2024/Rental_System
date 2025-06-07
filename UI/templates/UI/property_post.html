@@ -12,20 +12,14 @@
         <div>{{m}}</div>
       {% endfor %}
     {% endif %}
-
     <div>
-      <label for="fullname">Your Full Name</label>
-      <input type="text" id="fullname" name="fullname" placeholder="Enter here..." required>
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" placeholder="Enter here..." required>
     </div>
 
     <div>
-      <label for="phone">Your Phone Number</label>
-      <input type="phone" id="phone" name="phone" placeholder="+9779812345678" required>
-    </div>
-
-    <div>
-        <label for="location">Current Location</label>
-        <select id="location" name="current_location" required>
+        <label for="location"> Location</label>
+        <select id="location" name="location" required>
           <option value="">Select or type</option>
           <option>Dharmasthali, Tarakeshwar, Kathmandu</option>
           <option>Tokha, Kathmandu</option>
@@ -36,24 +30,11 @@
       </div>
 
     <div>
-      <label for="location">Location to Move</label>
-      <select id="location" name="location" required>
-        <option value="">Select or type</option>
-        <option>Dharmasthali, Tarakeshwar, Kathmandu</option>
-        <option>Tokha, Kathmandu</option>
-        <option>Nepaltar (Tarkeshwar), Kathmandu</option>
-        <option>Chandra Surya Marg, कोट देवी, Jadibuti</option>
-        <option>Maharajgunj Dhapasi Bansbari, Basundhara Area</option>
-      </select>
-    </div>
-
-    
-    <div>
         <label for="area">Tole/Area</label>
         <input type="text" id="area" name="area" placeholder="eg. Samakhushi">
       </div>
-    
     <div>
+
       <label for="propertytype">Property Type</label>
       <select id="propertytype" name="propertytype" required>
         <option value="">Select or type</option>
@@ -69,18 +50,14 @@
     </div>
 
     <div>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="Enter Your Email">
-      </div>
-  
-      <div>
-        <label for="email">Date to Move</label>
-        <input type="date" id="date" name="date" required>
+        <label for="price">Price</label>
+        <input type="number" id="price" name="price" placeholder="Eg. 5000" required>
       </div>
 
+
     <div class="full-width">
-      <label for="message">If any</label>
-      <textarea id="message" name="message" placeholder="Write a message"></textarea>
+      <label for="message">Information</label>
+      <textarea id="message" name="message" placeholder="Add Extra Information, if any..."></textarea>
     </div>
 
     <button class="button2" type="submit">Submit</button>

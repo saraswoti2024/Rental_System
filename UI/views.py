@@ -55,3 +55,11 @@ def shifthome(request):
             messages.success(request,'form submitted successfully!')
             return redirect('shifthome')
     return render(request,'UI/shifthome.html')
+
+
+def aboutus(request):
+    return render(request,'UI/aboutus.html')
+
+
+def addproperty(request):
+    return render(request,'UI/property_post.html')

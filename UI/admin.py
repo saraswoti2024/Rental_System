@@ -4,6 +4,6 @@ from .models import *
 
 admin.site.register(Choice1)
 
-@admin.register(Featured)
+@admin.register(property_post)
 class Featured(admin.ModelAdmin):
     list_display = ['title','address','property_type','price']

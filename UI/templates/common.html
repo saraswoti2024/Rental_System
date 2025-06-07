@@ -33,10 +33,11 @@
 
             <h2 class="navtitle">{{i.choice}}</h2>
             {% endfor %}
-            <h2 class="navtitle">ABOUT US</h2>
+            <a href="{% url 'aboutus' %}"><h2 class="navtitle">ABOUT US</h2></a>
 
             <div class="request">
             <a href="{% url 'request_room' %}"><button class="navbutton"><h2 class="navtitle2">Find me Room</h2></button></a>
+            <a href="{% url 'addproperty' %}"><button class="navbutton"><h2 class="navtitle2">Add Property</h2></button></a>
             <a href="{% url 'shifthome' %}"><button class="navbutton"><h2 class="navtitle2" >Shift Home</h2></button>
              </div></a>
             <a href="{% url 'log_in' %}"><h2 class="navtitle1">LOGIN</h2></a>
