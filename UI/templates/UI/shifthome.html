@@ -1,0 +1,104 @@
+{% extends "common.html" %}
+{% block content %}
+{% load static %}
+
+
+<div class="form-container m-4 p-4 mx-auto">
+  <form action="{% url 'shifthome' %}" method="post">
+    {% csrf_token %}
+
+    {% if messages %}
+      {% for m in messages  %}
+        <div>{{m}}</div>
+      {% endfor %}
+    {% endif %}
+
+    <div>
+      <label for="fullname">Your Full Name</label>
+      <input type="text" id="fullname" name="fullname" placeholder="Enter here..." required>
+    </div>
+
+    <div>
+      <label for="phone">Your Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="+9779812345678" required>
+    </div>
+
+    <div>
+        <label for="location">Current Location</label>
+        <select id="location" name="current_location" required>
+          <option value="">Select or type</option>
+          <option>Dharmasthali, Tarakeshwar, Kathmandu</option>
+          <option>Tokha, Kathmandu</option>
+          <option>Nepaltar (Tarkeshwar), Kathmandu</option>
+          <option>Chandra Surya Marg, कोट देवी, Jadibuti</option>
+          <option>Maharajgunj Dhapasi Bansbari, Basundhara Area</option>
+        </select>
+      </div>
+
+    <div>
+      <label for="location">Location to Move</label>
+      <select id="location" name="location" required>
+        <option value="">Select or type</option>
+        <option>Dharmasthali, Tarakeshwar, Kathmandu</option>
+        <option>Tokha, Kathmandu</option>
+        <option>Nepaltar (Tarkeshwar), Kathmandu</option>
+        <option>Chandra Surya Marg, कोट देवी, Jadibuti</option>
+        <option>Maharajgunj Dhapasi Bansbari, Basundhara Area</option>
+      </select>
+    </div>
+
+    
+    <div>
+        <label for="area">Tole/Area</label>
+        <input type="text" id="area" name="area" placeholder="eg. Samakhushi">
+      </div>
+    
+    <div>
+      <label for="propertytype">Property Type</label>
+      <select id="propertytype" name="propertytype" required>
+        <option value="">Select or type</option>
+        <option>1 Room</option>
+        <option>2 Room</option>
+        <option>Flat</option>
+        <option>1BHK</option>
+        <option>2BHK</option>
+        <option>3BHK</option>
+        <option>4BHK</option>
+        <option>Apartment</option>
+      </select>
+    </div>
+
+    <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter Your Email">
+      </div>
+  
+      <div>
+        <label for="email">Date to Move</label>
+        <input type="date" id="date" name="date" required>
+      </div>
+
+    <div class="full-width">
+      <label for="message">If any</label>
+      <textarea id="message" name="message" placeholder="Write a message"></textarea>
+    </div>
+
+    <button class="button2" type="submit">Submit</button>
+  </form>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('#location').select2({
+      placeholder: "Select or type",
+      allowClear: true
+    });
+
+    $('#propertytype').select2({
+      placeholder: "Select or type",
+      allowClear: true
+    });
+  });
+</script>
+
+{% endblock content %}

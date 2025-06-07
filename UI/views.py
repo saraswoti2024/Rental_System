@@ -36,3 +36,22 @@ def request_room_view(request):
         messages.error(request,f'{str(e)}')
         return redirect('request_room')       
     return render(request,'UI/request.html')
+
+
+def shifthome(request):
+    if request.method == 'POST':
+            fname = request.POST['fullname']
+            phone = request.POST['phone']        
+            email = request.POST['email']        
+            message = request.POST['message']        
+            area = request.POST['area']        
+            propertytype = request.POST['propertytype']        
+            current_location = request.POST['current_location'] 
+            location2 = request.POST['location']
+            date = request.POST['date']
+            data = ShiftHome(fullname=fname,phone=phone,email=email,message=message,property1 =propertytype,area=area,location1=current_location, location2 = location2,date=date)
+            data.full_clean()
+            data.save()
+            messages.success(request,'form submitted successfully!')
+            return redirect('shifthome')
+    return render(request,'UI/shifthome.html')

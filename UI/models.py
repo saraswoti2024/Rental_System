@@ -1,5 +1,5 @@
 from django.db import models
-from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Choice1(models.Model):
@@ -19,10 +19,21 @@ class Featured(models.Model):
 
 class RequestRoom(models.Model):
     fullname = models.CharField(max_length=100)
-    phone = PhoneNumberField()
+    phone = PhoneNumberField(null=True)
     email = models.EmailField()
     location = models.CharField(max_length=200)
     property = models.CharField(max_length=200)
     message = models.TextField()
     area = models.CharField(max_length=100)
 
+
+class ShiftHome(models.Model):
+    fullname = models.CharField(max_length=100)
+    phone = PhoneNumberField(null=True)
+    email = models.EmailField()
+    location1 = models.CharField(max_length=200)
+    location2 = models.CharField(max_length=200)
+    property1 = models.CharField(max_length=200)
+    message = models.TextField()
+    area = models.CharField(max_length=100)
+    date = models.DateField()
