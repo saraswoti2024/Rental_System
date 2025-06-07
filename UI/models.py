@@ -11,7 +11,8 @@ class Choice1(models.Model):
 class property_post(models.Model):
     title = models.CharField(max_length=60)
     address = models.CharField(max_length=60)
-    property_type = models.ForeignKey(Choice1,on_delete=models.CASCADE)
+    property_type = models.CharField(max_length=100,null=True)
+    area = models.CharField(max_length=100,null=True)
     price = models.IntegerField()
     extra_info = models.TextField()
 
@@ -23,7 +24,7 @@ class RequestRoom(models.Model):
     phone = models.IntegerField(null=True)
     email = models.EmailField()
     location = models.CharField(max_length=200)
-    property = models.CharField(max_length=200)
+    property_type = models.CharField(max_length=200)
     message = models.TextField()
     area = models.CharField(max_length=100)
 

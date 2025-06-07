@@ -26,7 +26,7 @@ def request_room_view(request):
             area = request.POST['area']        
             propertytype = request.POST['propertytype']        
             location = request.POST['location'] 
-            data = RequestRoom(fullname=fname,phone=phone,email=email,message=message,property=propertytype,area=area,location=location)
+            data = RequestRoom(fullname=fname,phone=phone,email=email,message=message,property_type=propertytype,area=area,location=location)
             data.full_clean()
             data.save()
             messages.success(request,'form submitted successfully!')
@@ -62,4 +62,16 @@ def aboutus(request):
 
 
 def addproperty(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        address = request.POST['location']
+        propertytype = request.POST['propertytype']
+        price = request.POST['price']
+        message = request.POST['message']
+        tole = request.POST['area']
+        data = property_post(title=title,address = address, property_type = propertytype,price= price, extra_info = message,area = tole)
+        data.full_clean()
+        data.save()
+        messages.success(request,'Property addedsuccessfully!')
+        return redirect('shifthome')
     return render(request,'UI/property_post.html')
