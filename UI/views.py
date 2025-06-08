@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.views import View
 from .models import *
 from django.contrib import messages
+from .decorators import *
 # Create your views here.
 class HomeView(View):
     def post(self,request):
@@ -61,6 +62,7 @@ def aboutus(request):
     return render(request,'UI/aboutus.html')
 
 
+@landlord_required
 def addproperty(request):
     if request.method == 'POST':
         title = request.POST['title']
@@ -76,5 +78,7 @@ def addproperty(request):
         return redirect('shifthome')
     return render(request,'UI/property_post.html')
 
+
+@landlord_required
 def landlord_home(request):
     return render(request,'UI/home_landlord.html')

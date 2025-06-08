@@ -31,30 +31,51 @@
         <div class="navbar2">
           {% if request.user.is_authenticated %}
           {% if user.usertype == 'landlord' %}
-          <a href="{% url 'landlord_home' %}"><h2 class="navtitle">HOME</h2></a>
-          <a href="#"><h2 class="navtitle">Dashboard</h2></a>
-          <a href="{% url 'addproperty' %}"><button class="navbutton"><h2 class="navtitle2">Add Property</h2></button></a>
+              <!-- Landlord-only Navbar -->
+              <a href="{% url 'landlord_home' %}"><h2 class="navtitle">HOME</h2></a>
+              <a href="#"><h2 class="navtitle">Dashboard</h2></a>
+              <a href="{% url 'addproperty' %}"><button class="navbutton"><h2 class="navtitle2">Add Property</h2></button></a>
+              <a href="{% url 'aboutus' %}"><h2 class="navtitle">ABOUT US</h2></a>
+              <a href="{% url 'log_out' %}"><h2 class="navtitle1">LOGOUT</h2></a>
 
           {% elif user.usertype == 'rentseeker' %}
-            <a href="{% url 'home' %}"><h2 class="navtitle">HOME</h2></a>
-            <a href="{% url 'home' %}"><h2 class="navtitle">HOUSE</h2></a>
-            <a href="{% url 'home' %}"><h2 class="navtitle">FLATS & APARTMENTS</h2></a>
-            <a href="{% url 'home' %}"><h2 class="navtitle">OFFICE SPACE</h2></a>
-            <a href="{% url 'home' %}"><h2 class="navtitle">LANDS</h2></a>
-            <a href="{% url 'home' %}"><h2 class="navtitle">SHUTTERS & SHOP</h2></a>
-            <a href="{% url 'home' %}"><h2 class="navtitle">ROOMS</h2></a>  
-            <div class="request">
-            <a href="{% url 'request_room' %}"><button class="navbutton"><h2 class="navtitle2">Find me Room</h2></button></a>
+              <!-- Rentseeker Navbar -->
+              <a href="{% url 'home' %}"><h2 class="navtitle">HOME</h2></a>
+              <a href="{% url 'home' %}"><h2 class="navtitle">HOUSE</h2></a>
+              <a href="{% url 'home' %}"><h2 class="navtitle">FLATS & APARTMENTS</h2></a>
+              <a href="{% url 'home' %}"><h2 class="navtitle">OFFICE SPACE</h2></a>
+              <a href="{% url 'home' %}"><h2 class="navtitle">LANDS</h2></a>
+              <a href="{% url 'home' %}"><h2 class="navtitle">SHUTTERS & SHOP</h2></a>
+              <a href="{% url 'home' %}"><h2 class="navtitle">ROOMS</h2></a>
 
-            <a href="{% url 'shifthome' %}"><button class="navbutton"><h2 class="navtitle2" >Shift Home</h2></button>
-              </div></a>
-{% endif %}
-<a href="{% url 'aboutus' %}"><h2 class="navtitle">ABOUT US</h2></a>
-<a href="{% url 'log_out' %}"><h2 class="navtitle1">LOGOUT</h2></a>
-{% else %}
-<a href="{% url 'log_in' %}"><h2 class="navtitle1">LOGIN</h2></a>
-<a href="{% url 'register1' %}"><h2 class="navtitle1">REGISTER</h2></a>
-  {% endif %}
+              <div class="request">
+                  <a href="{% url 'request_room' %}"><button class="navbutton"><h2 class="navtitle2">Find me Room</h2></button></a>
+                  <a href="{% url 'shifthome' %}"><button class="navbutton"><h2 class="navtitle2">Shift Home</h2></button></a>
+              </div>
+
+              <a href="{% url 'aboutus' %}"><h2 class="navtitle">ABOUT US</h2></a>
+              <a href="{% url 'log_out' %}"><h2 class="navtitle1">LOGOUT</h2></a>
+          {% endif %}
+
+      {% else %}
+          <!-- Not logged in: Show rentseeker UI -->
+          <a href="{% url 'home' %}"><h2 class="navtitle">HOME</h2></a>
+          <a href="{% url 'home' %}"><h2 class="navtitle">HOUSE</h2></a>
+          <a href="{% url 'home' %}"><h2 class="navtitle">FLATS & APARTMENTS</h2></a>
+          <a href="{% url 'home' %}"><h2 class="navtitle">OFFICE SPACE</h2></a>
+          <a href="{% url 'home' %}"><h2 class="navtitle">LANDS</h2></a>
+          <a href="{% url 'home' %}"><h2 class="navtitle">SHUTTERS & SHOP</h2></a>
+          <a href="{% url 'home' %}"><h2 class="navtitle">ROOMS</h2></a>
+
+          <div class="request">
+              <a href="{% url 'request_room' %}"><button class="navbutton"><h2 class="navtitle2">Find me Room</h2></button></a>
+              <a href="{% url 'shifthome' %}"><button class="navbutton"><h2 class="navtitle2">Shift Home</h2></button></a>
+          </div>
+
+          <a href="{% url 'aboutus' %}"><h2 class="navtitle">ABOUT US</h2></a>
+          <a href="{% url 'log_in' %}"><h2 class="navtitle1">LOGIN</h2></a>
+          <a href="{% url 'register1' %}"><h2 class="navtitle1">REGISTER</h2></a>
+      {% endif %}
         
 
         </div>
