@@ -28,16 +28,16 @@ class Log_in(View):
                 value = authenticate(username=uname,password=password)
                 if value is not None:
                     login(request,value)
+                    if value.usertype == 'landlord':
+                        return redirect('landlord_home')
+                    elif value.usertype == 'rentseeker':
+                        return redirect('home')
                 else:
                     messages.error(request,'password is not valid!')
                     return redirect('log_in')
         except Exception as e:
             messages.error(request,f'{str(e)}')
             return redirect('log_in')
-        return redirect('home')
-        
-
-
 class Register1(View):
     def get(self,request):
         return render(request,'accounts/register1.html')

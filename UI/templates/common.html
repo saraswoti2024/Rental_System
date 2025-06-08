@@ -17,6 +17,7 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css" />
 
     <link rel="stylesheet" href="{% static 'css/common.css' %}">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
@@ -28,26 +29,36 @@
      <div class="navbar">
         <h1 class="logo">RENTAL SERVICE</h1>
         <div class="navbar2">
+          {% if request.user.is_authenticated %}
+          {% if user.usertype == 'landlord' %}
+          <a href="{% url 'landlord_home' %}"><h2 class="navtitle">HOME</h2></a>
+          <a href="#"><h2 class="navtitle">Dashboard</h2></a>
+          <a href="{% url 'addproperty' %}"><button class="navbutton"><h2 class="navtitle2">Add Property</h2></button></a>
+
+          {% elif user.usertype == 'rentseeker' %}
             <a href="{% url 'home' %}"><h2 class="navtitle">HOME</h2></a>
-            {% for i in nav  %}    
-
-            <h2 class="navtitle">{{i.choice}}</h2>
-            {% endfor %}
-            <a href="{% url 'aboutus' %}"><h2 class="navtitle">ABOUT US</h2></a>
-
+            <a href="{% url 'home' %}"><h2 class="navtitle">HOUSE</h2></a>
+            <a href="{% url 'home' %}"><h2 class="navtitle">FLATS & APARTMENTS</h2></a>
+            <a href="{% url 'home' %}"><h2 class="navtitle">OFFICE SPACE</h2></a>
+            <a href="{% url 'home' %}"><h2 class="navtitle">LANDS</h2></a>
+            <a href="{% url 'home' %}"><h2 class="navtitle">SHUTTERS & SHOP</h2></a>
+            <a href="{% url 'home' %}"><h2 class="navtitle">ROOMS</h2></a>  
             <div class="request">
             <a href="{% url 'request_room' %}"><button class="navbutton"><h2 class="navtitle2">Find me Room</h2></button></a>
-            <a href="{% url 'addproperty' %}"><button class="navbutton"><h2 class="navtitle2">Add Property</h2></button></a>
-            <a href="{% url 'shifthome' %}"><button class="navbutton"><h2 class="navtitle2" >Shift Home</h2></button>
-             </div></a>
-            <a href="{% url 'log_in' %}"><h2 class="navtitle1">LOGIN</h2></a>
-            <a href="{% url 'register1' %}"><h2 class="navtitle1">REGISTER</h2></a>
-            <a href="{% url 'log_out' %}"><h2 class="navtitle1">LOGOUT</h2></a>
-            
-        </div>
-     </div>
 
-   
+            <a href="{% url 'shifthome' %}"><button class="navbutton"><h2 class="navtitle2" >Shift Home</h2></button>
+              </div></a>
+{% endif %}
+<a href="{% url 'aboutus' %}"><h2 class="navtitle">ABOUT US</h2></a>
+<a href="{% url 'log_out' %}"><h2 class="navtitle1">LOGOUT</h2></a>
+{% else %}
+<a href="{% url 'log_in' %}"><h2 class="navtitle1">LOGIN</h2></a>
+<a href="{% url 'register1' %}"><h2 class="navtitle1">REGISTER</h2></a>
+  {% endif %}
+        
+
+        </div>
+     </div>   
      <!-- navbar ends -->
     {% block content %}
       
@@ -66,6 +77,9 @@
               <li><a href="{% url 'home' %}">Home</a></li>
               <li><a href="#">Properties</a></li>
               <li><a href="#">About</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Contact</a></li>
               <li><a href="#">Contact</a></li>
             </ul>
           </div>
@@ -89,10 +103,15 @@
         </div>
       </footer>
       
+      
      <!-- footer ends -->
 
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+     <!-- JS -->
+     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
+
+
 </body>
 </html>

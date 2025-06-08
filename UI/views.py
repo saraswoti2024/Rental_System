@@ -75,3 +75,6 @@ def addproperty(request):
         messages.success(request,'Property addedsuccessfully!')
         return redirect('shifthome')
     return render(request,'UI/property_post.html')
+
+def landlord_home(request):
+    return render(request,'UI/home_landlord.html')

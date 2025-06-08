@@ -8,4 +8,5 @@ urlpatterns = [
     path('shift_home/',shifthome,name="shifthome"),
     path('aboutus/',aboutus,name="aboutus"),
     path('addproperty/',addproperty,name="addproperty"),
+    path('landlord_home/',landlord_home,name="landlord_home"),
 ]
