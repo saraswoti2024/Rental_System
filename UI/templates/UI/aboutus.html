@@ -1,4 +1,133 @@
 {% extends "common.html" %}
 {% block content %}
-  <h1>about us page</h1>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(90deg, #2c3e50, #34495e);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.1em;
+      font-weight: 300;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    h2 {
+      color: #2c3e50;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    p, li {
+      font-size: 1.05em;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style: square;
+      padding-left: 20px;
+    }
+
+    .highlight {
+      color: #2980b9;
+      font-weight: bold;
+    }
+
+    .contact {
+      background: #ecf0f1;
+      padding: 25px;
+      margin-top: 30px;
+      border-radius: 10px;
+    }
+
+    .contact p {
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #2c3e50;
+      color: white;
+      margin-top: 40px;
+      font-size: 0.95em;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+  <div class="container">
+    <h2>Who We Are</h2>
+    <p>
+      <span class="highlight">Rental System Service</span> is a Kathmandu-based digital rental platform designed to simplify the way people find and rent properties, equipment, and more. We connect renters and owners through a fast, reliable, and secure system.
+    </p>
+
+    <h2>What We Offer</h2>
+    <ul>
+      <li>Apartment, Room, and Commercial Property Rentals</li>
+      <li>Tools, Furniture, Electronics, and Event Equipment Rentals</li>
+      <li>Advanced Search Filters for Easy Browsing</li>
+      <li>Verified Listings and Safe Online Booking</li>
+    </ul>
+
+    <h2>Our Mission</h2>
+    <p>
+      To make renting in Kathmandu <strong>faster, safer, and smarter</strong> through local insight and modern technology.
+    </p>
+
+    <h2>Why Choose Us?</h2>
+    <ul>
+      <li><strong>Local Experts</strong> who understand your needs</li>
+      <li><strong>Trusted Network</strong> of verified owners</li>
+      <li><strong>Transparent Pricing</strong> with no hidden costs</li>
+      <li><strong>24/7 Support</strong> and friendly service</li>
+    </ul>
+
+    <div class="contact">
+      <h2>Contact Us</h2>
+      <p>📞 Phone: +977-XXXXXXXXXX</p>
+      <p>📧 Email: info@yourcompany.com</p>
+      <p>📍 Address: Putalisadak, Kathmandu, Nepal</p>
+    </div>
+  </div>
+
 {% endblock content %}
