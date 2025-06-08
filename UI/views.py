@@ -3,6 +3,9 @@ from django.views import View
 from .models import *
 from django.contrib import messages
 from .decorators import *
+from django.core.mail import send_mail,EmailMessage
+from django.template.loader import render_to_string
+from datetime import datetime
 # Create your views here.
 class HomeView(View):
     def post(self,request):
@@ -30,7 +33,15 @@ def request_room_view(request):
             data = RequestRoom(fullname=fname,phone=phone,email=email,message=message,property_type=propertytype,area=area,location=location)
             data.full_clean()
             data.save()
-            messages.success(request,'form submitted successfully!')
+             ##gmail starts
+            subject = "Room Request"
+            message = render_to_string('UI/gmail.html',{'name': fname ,'date':datetime.now()})
+            from_email = 'saraswotikhadka2k2@gmail.com'
+            recipient_list = [email]
+            emailmsg = EmailMessage(subject,message,from_email,recipient_list)
+            emailmsg.send(fail_silently=True)
+            ##gmail ends
+            messages.success(request,f" your form submitted successfully")
             return redirect('request_room')
 
     except Exception as e:
