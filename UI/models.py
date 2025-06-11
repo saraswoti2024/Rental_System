@@ -23,7 +23,7 @@ class property_post(models.Model):
 
 class RequestRoom(models.Model):
     fullname = models.CharField(max_length=100)
-    phone = models.IntegerField(null=True)
+    phone = PhoneNumberField(region='NP')
     email = models.EmailField()
     location = models.CharField(max_length=200)
     property_type = models.CharField(max_length=200)
@@ -43,7 +43,7 @@ class ShiftHome(models.Model):
     ('schedule', 'Schedule For Later'),
     ]
     booking_type = models.CharField(max_length=20, choices=BOOKING_CHOICES, default='instant')
-    phone = models.IntegerField(null=True)
+    phone = PhoneNumberField(region='NP')
     email = models.EmailField()
     location1 = models.CharField(max_length=200)
     location2 = models.CharField(max_length=200)
