@@ -52,16 +52,26 @@ def request_room_view(request):
 
 def shifthome(request):
     if request.method == 'POST':
-            fname = request.POST['fullname']
             phone = request.POST['phone']        
             email = request.POST['email']        
-            message = request.POST['message']        
-            area = request.POST['area']        
-            propertytype = request.POST['propertytype']        
-            current_location = request.POST['current_location'] 
-            location2 = request.POST['location']
-            date = request.POST['date']
-            data = ShiftHome(fullname=fname,phone=phone,email=email,message=message,property1 =propertytype,area=area,location1=current_location, location2 = location2,date=date)
+            message = request.POST['message']              
+            propertytype = request.POST['type']        
+            current_location = request.POST['location1'] 
+            location2 = request.POST['location2']
+            bed = request.POST['bed']
+            sofa = request.POST['sofa']
+            cupboard= request.POST['cupboard']
+            tv = request.POST['tv']
+            table = request.POST['table']
+          
+            booking_type = request.POST['booking_type']
+            if booking_type == 'instant':
+                  date = timezone.now().date()  
+                  time = timezone.now().time().replace(microsecond=0)
+            else:
+                time = request.POST['time']
+                date = request.POST['date']
+            data = ShiftHome(phone=phone,email=email,message=message,property1 =propertytype,location1=current_location, location2 = location2,bed=bed,sofa=sofa,cupboard=cupboard,tv=tv,table=table,time=time,date=date,booking_type=booking_type)
             data.full_clean()
             data.save()
             messages.success(request,'form submitted successfully!')
@@ -88,7 +98,6 @@ def addproperty(request):
         messages.success(request,'Property addedsuccessfully!')
         return redirect('shifthome')
     return render(request,'UI/property_post.html')
-
 
 @landlord_required
 def landlord_home(request):

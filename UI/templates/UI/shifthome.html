@@ -62,76 +62,125 @@
 </head>
 <body>
   <h1>Please fill all the details</h1>
-  <form action="" method="post">
+  <form action="{% url 'shifthome' %}" method="post">
+    {% csrf_token %}
+    {% if messages %}
+    {% for i in messages %}
+      <div>{{i}}</div>
+    {% endfor %}
+    {% endif %}
       <label>Type/Size</label>
-      <select required>
+      <select name="type" required>
         <option value="">Please select</option>
-        <option>Small</option>
-        <option>Medium</option>
-        <option>Large</option>
+        <option>Office</option>
+        <option>House</option>
+        <option>Flat</option>
+        <option>Studio</option>
+        <option>1Room</option>
+        <option>2Room</option>
+        <option>Apartment</option>
+        <option>other</option>
       </select>
 
     <div class="grid">
       <div class="field">
         <label>Pick Up Location</label>
-        <input type="text" required>
+        <input type="text" name="location1" required>
       </div>
       <div class="field">
         <label>Drop Off Location</label>
-        <input type="text" required>
+        <input type="text" name="location2" required>
       </div>
       <div class="field">
         <label>Phone Number</label>
-        <input type="tel" required>
+        <input type="tel" name="phone" required>
       </div>
       <div class="field">
         <label>Email</label>
-        <input type="email" required>
+        <input type="email" name="email" required>
       </div>
     </div>
 
     <div class="grid">
       <div class="field">
-        <label>No Of Bed</label>
-        <div class="counter"><button type="button" onclick="changeCount('bed', -1)">-</button><span id="bed">0</span><button type="button" onclick="changeCount('bed', 1)">+</button></div>
-      </div>
-      <div class="field">
-        <label>No Of Cupboard</label>
-        <div class="counter"><button type="button" onclick="changeCount('cupboard', -1)">-</button><span id="cupboard">0</span><button type="button" onclick="changeCount('cupboard', 1)">+</button></div>
-      </div>
-      <div class="field">
         <label>No Of TV</label>
-        <div class="counter"><button type="button" onclick="changeCount('tv', -1)">-</button><span id="tv">0</span><button type="button" onclick="changeCount('tv', 1)">+</button></div>
+        <div class="counter">
+          <button type="button" onclick="changeCount('tv', -1)">-</button>
+          <span id="tv-display">0</span>
+          <button type="button" onclick="changeCount('tv', 1)">+</button>
+        </div>
+        <input type="hidden" name="tv" id="tv" value="0">
       </div>
-      <div class="field">
-        <label>No Of Dining Table</label>
-        <div class="counter"><button type="button" onclick="changeCount('dining', -1)">-</button><span id="dining">0</span><button type="button" onclick="changeCount('dining', 1)">+</button></div>
-      </div>
-      <div class="field">
-        <label>No Of Sofa</label>
-        <div class="counter"><button type="button" onclick="changeCount('sofa', -1)">-</button><span id="sofa">0</span><button type="button" onclick="changeCount('sofa', 1)">+</button></div>
-      </div>
+      <!-- TV -->
+<div class="field">
+  <label>No of Bed</label>
+  <div class="counter">
+    <button type="button" onclick="changeCount('bed', -1)">-</button>
+    <span id="bed-display">0</span>
+    <button type="button" onclick="changeCount('bed', 1)">+</button>
+  </div>
+  <input type="hidden" name="bed" id="bed" value="0">
+</div>
+
+<!-- Cupboard -->
+<div class="field">
+  <label>No of Cupboard</label>
+  <div class="counter">
+    <button type="button" onclick="changeCount('cupboard', -1)">-</button>
+    <span id="cupboard-display">0</span>
+    <button type="button" onclick="changeCount('cupboard', 1)">+</button>
+  </div>
+  <input type="hidden" name="cupboard" id="cupboard" value="0">
+</div>
+
+<!-- Sofa -->
+<div class="field">
+  <label>No of Sofa</label>
+  <div class="counter">
+    <button type="button" onclick="changeCount('sofa', -1)">-</button>
+    <span id="sofa-display">0</span>
+    <button type="button" onclick="changeCount('sofa', 1)">+</button>
+  </div>
+  <input type="hidden" name="sofa" id="sofa" value="0">
+</div>
+
+<div class="field">
+  <label>No of Table</label>
+  <div class="counter">
+    <button type="button" onclick="changeCount('table', -1)">-</button>
+    <span id="table-display">0</span>
+    <button type="button" onclick="changeCount('table', 1)">+</button>
+  </div>
+  <input type="hidden" name="table" id="table" value="0">
+</div>
+
     </div>
     <br>
-    <div class="schedule">
+    <div class="schedule"> 
       <div>
-        <label><input type="radio" name="when" required> Instant Booking</label>
-        <label><input type="radio" name="when" required> Schedule For Later</label>
+        <label><input type="radio" name="booking_type" value="instant" checked> Instant Booking</label>
+        <label><input type="radio" name="booking_type" value="schedule"> Schedule For Later</label>
       </div>
+    </div>
+    
+    <!-- Hidden by default -->
+    <div id="schedule-fields" style="display: none;">
       <div>
         <label>Schedule Date</label>
-        <input type="date">
+        <input type="date" name="date" id="date">
       </div>
       <div>
         <label>Select Time</label>
-        <input type="time">
+        <input type="time" name="time" id="time">
       </div>
     </div>
-
+    
+  
+    
 <br>
     <div class="field">
       <label>Message</label>
-      <textarea></textarea>
+      <textarea name="message"></textarea>
     </div>
 
 <br>
@@ -140,13 +189,38 @@
     </div>
   </form>
 
+
   <script>
-    function changeCount(id, delta) {
-      let el = document.getElementById(id);
-      let count = parseInt(el.textContent) + delta;
-      el.textContent = count < 0 ? 0 : count;
+    const instant = document.querySelector('input[value="instant"]');
+    const schedule = document.querySelector('input[value="schedule"]');
+    const scheduleFields = document.getElementById('schedule-fields');
+  
+    function toggleFields() {
+      if (schedule.checked) {
+        scheduleFields.style.display = 'block';
+      } else {
+        scheduleFields.style.display = 'none';
+      }
     }
+  
+    instant.addEventListener('change', toggleFields);
+    schedule.addEventListener('change', toggleFields);
+  
+    // Initial check
+    toggleFields();
   </script>
+
+<script>
+  function changeCount(id, delta) {
+    const display = document.getElementById(`${id}-display`);
+    const input = document.getElementById(id);
+    let count = parseInt(input.value) + delta;
+    if (count < 0) count = 0;
+    display.textContent = count;
+    input.value = count;
+  }
+</script>
+
 </body>
 </html>
 {% endblock content %}
