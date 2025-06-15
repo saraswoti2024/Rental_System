@@ -34,6 +34,7 @@ class property_post(models.Model):
     phone = PhoneNumberField(region='NP')
     price = models.IntegerField()
     extra_info = models.TextField()
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

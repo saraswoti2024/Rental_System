@@ -28,7 +28,7 @@
                         <td>{{i.property_type}}</td>
                         <td>{{i.main_photo}}</td>
                         <td>{{i.price}}</td>
-                        <td>pending</td>
+                        <td>{{ i.is_approved|yesno:"Approved,Pending" }}</td>
                         <td><button>fulfilled</button></td>
                         <td><button>Edit</button></td>
                         <td><a href="{% url 'deleteproperty' i.id  %}"><button>Delete</button></a></td>
