@@ -33,7 +33,7 @@
           {% if user.usertype == 'landlord' %}
               <!-- Landlord-only Navbar -->
               <a href="{% url 'landlord_home' %}"><h2 class="navtitle">HOME</h2></a>
-              <a href="#"><h2 class="navtitle">Dashboard</h2></a>
+              <a href="{% url 'ldashboard' %}"><h2 class="navtitle">Dashboard</h2></a>
               <a href="{% url 'addproperty' %}"><button class="navbutton"><h2 class="navtitle2">Add Property</h2></button></a>
               <a href="{% url 'aboutus' %}"><h2 class="navtitle">ABOUT US</h2></a>
               <a href="{% url 'log_out' %}"><h2 class="navtitle1">LOGOUT</h2></a>

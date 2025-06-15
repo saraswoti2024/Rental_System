@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.views import View
 from .models import *
 from django.contrib import messages
@@ -146,3 +146,12 @@ def addproperty(request):
 @landlord_required
 def landlord_home(request):
     return render(request,'UI/home_landlord.html')
+
+@landlord_required
+def landlord_dashboard(request):
+    return render(request,'UI/Ldashboard.html')
+
+def delete_property(request,id):
+     data = get_object_or_404(property_post, id=id) 
+     data.delete()
+     return redirect('ldashboard')

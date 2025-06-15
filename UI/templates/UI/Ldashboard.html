@@ -1,0 +1,38 @@
+{% extends "common.html" %}
+{% block content %}
+  
+<div class="container">
+    <div class="row p-3 m-3">
+        <div class="col-12 mx-auto">
+                <h1 class="text-center">Your Dashboard</h1>
+                <button>fulfilled list</button>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Property Type</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">price</th>
+                        <th scope="col">Approval</th>
+                        <th scope="col">status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td><button>fulfilled</button></td>
+                        <td><button>Edit</button></td>
+                        <td><a href="{% url 'deleteproperty' i.id  %}"><button>Delete</button></a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}
