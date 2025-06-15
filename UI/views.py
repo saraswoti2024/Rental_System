@@ -161,7 +161,8 @@ def delete_property(request,id):
      return redirect('ldashboard')
 
 def house(request):
-    data = property_post.objects.filter(property_type="House")
+    
+    data = property_post.objects.filter(property_type="House",is_approved=True).order_by('date')
     context = {
         'houses' : data
     }

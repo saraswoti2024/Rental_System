@@ -5,6 +5,12 @@ from django.core.exceptions import ValidationError
 from multiselectfield import MultiSelectField
 
 
+def one_hour_later():
+    return timezone.now().time()
+
+def current_date():
+    return timezone.now().date()
+
 class Choice1(models.Model):
     choice = models.CharField(max_length=60)
 
@@ -35,6 +41,8 @@ class property_post(models.Model):
     price = models.IntegerField()
     extra_info = models.TextField()
     is_approved = models.BooleanField(default=False)
+    date = models.DateField(default=current_date)
+    time = models.TimeField(default=one_hour_later)
 
     def __str__(self):
         return self.title
@@ -49,11 +57,6 @@ class RequestRoom(models.Model):
     area = models.CharField(max_length=100)
 
 
-def one_hour_later():
-    return timezone.now().time()
-
-def current_date():
-    return timezone.now().date()
 
 class ShiftHome(models.Model):
     BOOKING_CHOICES = [
