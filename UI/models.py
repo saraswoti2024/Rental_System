@@ -2,6 +2,7 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from multiselectfield import MultiSelectField
 
 
 class Choice1(models.Model):
@@ -10,11 +11,27 @@ class Choice1(models.Model):
     def __str__(self):
         return self.choice
 
+FACILITY_CHOICES = [
+    ('GYM', 'GYM'),
+    ('School', 'School'),
+    ('Swimming Pool', 'Swimming Pool'),
+    ('Hospital', 'Hospital'),
+    ('Banquet Hall', 'Banquet Hall'),
+    ('College', 'College')
+]
 class property_post(models.Model):
     title = models.CharField(max_length=60)
     address = models.CharField(max_length=60)
     property_type = models.CharField(max_length=100,null=True)
     area = models.CharField(max_length=100,null=True)
+    main_photo = models.ImageField(blank=False)
+    photo1 = models.ImageField(blank=False,upload_to="property_images")
+    photo2 = models.ImageField(blank=False,upload_to="property_images")
+    photo3 = models.ImageField(blank=True,upload_to="property_images")
+    photo4 = models.ImageField(blank=True,upload_to="property_images")
+    facilities = MultiSelectField(choices=FACILITY_CHOICES,null=True)
+    video = models.FileField(upload_to="property_video",blank=True,null=True)
+    phone = PhoneNumberField(region='NP')
     price = models.IntegerField()
     extra_info = models.TextField()
 

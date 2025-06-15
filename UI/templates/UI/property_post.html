@@ -4,7 +4,7 @@
 
 
 <div class="form-container m-4 p-4 mx-auto">
-  <form action="{% url 'addproperty' %}" method="post">
+  <form action="{% url 'addproperty' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
     {% if messages %}
@@ -15,6 +15,10 @@
     <div>
       <label for="title">Title</label>
       <input type="text" id="title" name="title" placeholder="Enter here..." required>
+    </div>
+    <div>
+      <label for="phone">phone</label>
+      <input type="phone" id="phone" name="phone" placeholder="Nepal Number" required>
     </div>
 
     <div>
@@ -34,6 +38,25 @@
         <input type="text" id="area" name="area" placeholder="eg. Samakhushi">
       </div>
     <div>
+    
+    <!-- images -->
+<!-- Main Photo Upload -->
+<label>Main Photo</label>
+<input type="file" name="main_photo" accept="image/*" required>
+<label>Photo1 *if any</label>
+<input type="file" name="photo1" accept="image/*" required>
+<label>photo2 *if any</label>
+<input type="file" name="photo2" accept="image/*" required>
+<label>photo3 *if any</label>
+<input type="file" name="photo3" accept="image/*">
+<label>photo4 *if any</label>
+<input type="file" name="photo4" accept="image/*">
+   <!-- ends -->
+
+    <div>
+      <label for="video">Video</label>
+      <input type="file" name="video" accept="video/*">
+    </div>
 
       <label for="propertytype">Property Type</label>
       <select id="propertytype" name="propertytype" required>
@@ -50,14 +73,23 @@
     </div>
 
     <div>
-        <label for="price">Price</label>
+        <label for="price">Property Price</label>
         <input type="number" id="price" name="price" placeholder="Eg. 5000" required>
       </div>
 
+      <div>
+        <label for="facities">Facilities</label>
+        <label><input type="checkbox" name="facilities[]" value="GYM" > GYM</label>
+        <label><input type="checkbox" name="facilities[]" value="Swimming Pool" > Swimming Pool</label>
+        <label><input type="checkbox" name="facilities[]" value="Hospital" > Hospital</label>
+        <label><input type="checkbox" name="facilities[]" value="Banquet Hall" > Banquet Hall</label>
+        <label><input type="checkbox" name="facilities[]" value="School" > School</label>
+        <label><input type="checkbox" name="facilities[]" value="College" > College</label>
+      </div>
 
     <div class="full-width">
-      <label for="message">Information</label>
-      <textarea id="message" name="message" placeholder="Add Extra Information, if any..."></textarea>
+      <label for="message">Description</label>
+      <textarea id="message" name="message" placeholder="Description about the property"></textarea>
     </div>
 
     <button class="button2" type="submit">Submit</button>

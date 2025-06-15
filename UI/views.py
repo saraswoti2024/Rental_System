@@ -7,6 +7,14 @@ from django.core.mail import send_mail,EmailMessage
 from django.template.loader import render_to_string
 from datetime import datetime
 # Create your views here.
+
+
+def is_valid_image(file):
+    return file.content_type.startswith('image/')
+
+def is_valid_video(file):
+    return file.content_type.startswith('video/')
+
 class HomeView(View):
     def post(self,request):
         pass
@@ -98,18 +106,41 @@ def aboutus(request):
 
 @landlord_required
 def addproperty(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.FILES:
         title = request.POST['title']
         address = request.POST['location']
         propertytype = request.POST['propertytype']
+        phone = request.POST['phone']
+        facilities = request.POST.getlist('facilities[]')
         price = request.POST['price']
+        video = request.FILES.get('video')
+        mainphoto = request.FILES.get('main_photo')
+        photo1 = request.FILES.get('photo1')
+        photo2 = request.FILES.get('photo2')
+        photo3 = request.FILES.get('photo3')
+        photo4 = request.FILES.get('photo4')
         message = request.POST['message']
         tole = request.POST['area']
-        data = property_post(title=title,address = address, property_type = propertytype,price= price, extra_info = message,area = tole)
+
+        if mainphoto and not is_valid_image(mainphoto):
+            messages.error(request,'must be image')
+        if photo1 and not is_valid_image(photo1):
+            messages.error(request,'must be image')
+        if photo2 and not is_valid_image(photo2):
+            messages.error(request,'must be image')
+        if photo3 and not is_valid_image(photo3):
+            messages.error(request,'must be image')
+        if photo4 and not is_valid_image(photo4):
+            messages.error(request,'must be image')
+
+        if video and not is_valid_video(video):
+            messages.error(request,'must be video')
+
+        data = property_post(title=title,address = address, property_type = propertytype,price= price, extra_info = message,area = tole,video=video,main_photo = mainphoto,photo1=photo1,photo2=photo2,photo3=photo3,photo4=photo4,facilities=facilities,phone=phone)
         data.full_clean()
         data.save()
-        messages.success(request,'Property addedsuccessfully!')
-        return redirect('shifthome')
+        messages.success(request,'Property added successfully!')
+        return redirect('addproperty')
     return render(request,'UI/property_post.html')
 
 @landlord_required

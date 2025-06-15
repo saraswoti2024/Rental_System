@@ -43,6 +43,7 @@ EXTERNAL_APPS = [
     'accounts',
     'UI',
     'phonenumber_field',
+    'multiselectfield',
 ]
 
 INSTALLED_APPS.extend(EXTERNAL_APPS)
