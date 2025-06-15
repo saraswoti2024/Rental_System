@@ -149,7 +149,11 @@ def landlord_home(request):
 
 @landlord_required
 def landlord_dashboard(request):
-    return render(request,'UI/Ldashboard.html')
+    data = property_post.objects.all()
+    context = {
+        'property' : data,
+    }
+    return render(request,'UI/Ldashboard.html',context)
 
 def delete_property(request,id):
      data = get_object_or_404(property_post, id=id) 

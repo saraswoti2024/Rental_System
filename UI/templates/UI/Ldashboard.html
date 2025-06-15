@@ -19,17 +19,23 @@
                       </tr>
                     </thead>
                     <tbody>
+                        {% for i in property  %}
                       <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
+                       
+                          
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{i.title}}</td>
+                        <td>{{i.property_type}}</td>
+                        <td>{{i.main_photo}}</td>
+                        <td>{{i.price}}</td>
+                        <td>pending</td>
                         <td><button>fulfilled</button></td>
                         <td><button>Edit</button></td>
                         <td><a href="{% url 'deleteproperty' i.id  %}"><button>Delete</button></a></td>
-                      </tr>
+                  
+                    </tr>
+                    {% endfor %}    
+                   
                     </tbody>
                   </table>
         </div>
