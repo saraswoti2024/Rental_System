@@ -41,7 +41,7 @@
           {% elif user.usertype == 'rentseeker' %}
               <!-- Rentseeker Navbar -->
               <a href="{% url 'home' %}"><h2 class="navtitle">HOME</h2></a>
-              <a href="{% url 'home' %}"><h2 class="navtitle">HOUSE</h2></a>
+              <a href="{% url 'house' %}"><h2 class="navtitle">HOUSE</h2></a>
               <a href="{% url 'home' %}"><h2 class="navtitle">FLATS & APARTMENTS</h2></a>
               <a href="{% url 'home' %}"><h2 class="navtitle">OFFICE SPACE</h2></a>
               <a href="{% url 'home' %}"><h2 class="navtitle">LANDS</h2></a>
@@ -60,7 +60,7 @@
       {% else %}
           <!-- Not logged in: Show rentseeker UI -->
           <a href="{% url 'home' %}"><h2 class="navtitle">HOME</h2></a>
-          <a href="{% url 'home' %}"><h2 class="navtitle">HOUSE</h2></a>
+          <a href="{% url 'house' %}"><h2 class="navtitle">HOUSE</h2></a>
           <a href="{% url 'home' %}"><h2 class="navtitle">FLATS & APARTMENTS</h2></a>
           <a href="{% url 'home' %}"><h2 class="navtitle">OFFICE SPACE</h2></a>
           <a href="{% url 'home' %}"><h2 class="navtitle">LANDS</h2></a>

@@ -1,0 +1,22 @@
+{% extends "common.html" %}
+{% block content %}
+{% load static %}
+<div class="featured">
+    <div class="cards">
+        {% for i in houses  %}
+        <div class="card">
+            <img src="{{i.main_photo.url}}" alt="" >
+            <h3 class="feature-topic">{{i.title}}</h3>
+            <p class="location"><i class="fa-solid fa-location-dot"></i>{{i.address}}</p>
+            <div class="card-inner">
+                <p class="type"><i class="fa-solid fa-building"></i>{{i.property_type}}</p>
+                <p>|</p>
+                <p class="price"><i class="fa-solid fa-money-bill-1"></i>{{i.price}}</p>
+            </div>   
+        </div> 
+        {% endfor %}       
+    </div>
+    
+</div>
+ </div>
+{% endblock content %}

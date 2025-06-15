@@ -159,3 +159,10 @@ def delete_property(request,id):
      data = get_object_or_404(property_post, id=id) 
      data.delete()
      return redirect('ldashboard')
+
+def house(request):
+    data = property_post.objects.filter(property_type="House")
+    context = {
+        'houses' : data
+    }
+    return render(request,'UI/house.html',context)

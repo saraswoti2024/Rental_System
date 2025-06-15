@@ -11,4 +11,5 @@ urlpatterns = [
     path('landlord_home/',landlord_home,name="landlord_home"),
     path('landlord_Dashboard/',landlord_dashboard,name="ldashboard"),
     path('deleteproperty/<int:id>',delete_property,name="deleteproperty"),
+    path('house/',house,name="house"),
 ]
