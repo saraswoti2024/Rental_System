@@ -44,6 +44,8 @@ EXTERNAL_APPS = [
     'UI',
     'phonenumber_field',
     'multiselectfield',
+    'rest_framework',
+    'api',
 ]
 
 INSTALLED_APPS.extend(EXTERNAL_APPS)
