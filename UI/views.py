@@ -167,3 +167,11 @@ def house(request):
         'houses' : data
     }
     return render(request,'UI/house.html',context)
+
+def flat(request):
+    
+    data = property_post.objects.filter(property_type="Flat",is_approved=True).order_by('date')
+    context = {
+        'flat' : data
+    }
+    return render(request,'UI/Flat.html',context)
