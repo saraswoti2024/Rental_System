@@ -18,8 +18,12 @@ def is_valid_video(file):
 class HomeView(View):
     def post(self,request):
         pass
-    def get(self,request):
-        return render(request,'UI/home.html')
+    def get(self,request): 
+        data = property_post.objects.filter(is_approved=True).order_by('-date')[:5]
+        context = {
+            'feature' : data,
+        }
+        return render(request,'UI/home.html',context)
 
 def choices(request):
     return render(request,'UI/choices.html')
@@ -162,7 +166,7 @@ def delete_property(request,id):
 
 def house(request):
     
-    data = property_post.objects.filter(property_type="House",is_approved=True).order_by('date')
+    data = property_post.objects.filter(property_type="House",is_approved=True).order_by('-date')
     context = {
         'houses' : data
     }
@@ -170,8 +174,39 @@ def house(request):
 
 def flat(request):
     
-    data = property_post.objects.filter(property_type="Flat",is_approved=True).order_by('date')
+    data = property_post.objects.filter(property_type="Flat",is_approved=True).order_by('-date')
     context = {
         'flat' : data
     }
     return render(request,'UI/Flat.html',context)
+
+def officespace(request):
+    
+    data = property_post.objects.filter(property_type="office_space",is_approved=True).order_by('-date')
+    context = {
+        'office' : data
+    }
+    return render(request,'UI/office.html',context)
+
+def land(request):
+    data = property_post.objects.filter(property_type="lands",is_approved=True).order_by('-date')
+    context = {
+        'land' : data
+    }
+    return render(request,'UI/land.html',context)
+
+def shutter(request):
+    
+    data = property_post.objects.filter(property_type="shutters",is_approved=True).order_by('-date')
+    context = {
+        'shutter' : data
+    }
+    return render(request,'UI/shutter.html',context)
+
+def Room(request):
+    
+    data = property_post.objects.filter(property_type="Room",is_approved=True).order_by('-date')
+    context = {
+        'room' : data
+    }
+    return render(request,'UI/Room.html',context)

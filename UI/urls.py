@@ -13,4 +13,8 @@ urlpatterns = [
     path('deleteproperty/<int:id>',delete_property,name="deleteproperty"),
     path('house/',house,name="house"),
     path('flat/',flat,name="flat"),
+    path('office/',officespace,name="office"),
+    path('Room/',Room,name="room"),
+    path('land/',land,name="land"),
+    path('shutter/',shutter,name="shutter"),
 ]
