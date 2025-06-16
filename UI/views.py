@@ -62,6 +62,7 @@ def request_room_view(request):
     return render(request,'UI/request.html')
 
 
+
 def shifthome(request):
     try:
         if request.method == 'POST':
