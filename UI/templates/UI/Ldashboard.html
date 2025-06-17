@@ -26,7 +26,12 @@
                         <th scope="row">{{ forloop.counter }}</th>
                         <td>{{i.title}}</td>
                         <td>{{i.property_type}}</td>
-                        <td>{{i.main_photo}}</td>
+                        <td>{% if i.main_photo %}
+                          <img src="{{i.main_photo.url}}" alt="image" height="100px" width="100px">
+                        {% else %}
+                          <p>no image found</p>
+                        {% endif %}
+                        </td>
                         <td>{{i.price}}</td>
                         <td>{{ i.is_approved|yesno:"Approved,Pending" }}</td>
                         <td><button>fulfilled</button></td>
