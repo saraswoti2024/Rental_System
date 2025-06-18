@@ -220,6 +220,3 @@ def Room(request):
 def edit_ldashboard(request):
     return render(request,'UI/edit.html')
 
-def my_ads(request):
-
-    return render(request, 'my_ads.html', context)
