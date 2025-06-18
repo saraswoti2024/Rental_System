@@ -17,4 +17,5 @@ urlpatterns = [
     path('Room/',Room,name="room"),
     path('land/',land,name="land"),
     path('shutter/',shutter,name="shutter"),
+    path('edit_ldashboard/',edit_ldashboard,name="edit_ldashboard"),
 ]

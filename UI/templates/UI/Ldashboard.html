@@ -1,49 +1,61 @@
 {% extends "common.html" %}
 {% block content %}
-  
-<div class="container">
-    <div class="row p-3 m-3">
-        <div class="col-12 mx-auto">
-                <h1 class="text-center">Your Dashboard</h1>
-                <button>fulfilled list</button>
-                <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Property Type</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">price</th>
-                        <th scope="col">Approval</th>
-                        <th scope="col">status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {% for i in property  %}
-                      <tr>
-                       
-                          
-                        <th scope="row">{{ forloop.counter }}</th>
-                        <td>{{i.title}}</td>
-                        <td>{{i.property_type}}</td>
-                        <td>{% if i.main_photo %}
-                          <img src="{{i.main_photo.url}}" alt="image" height="100px" width="100px">
-                        {% else %}
-                          <p>no image found</p>
-                        {% endif %}
-                        </td>
-                        <td>{{i.price}}</td>
-                        <td>{{ i.is_approved|yesno:"Approved,Pending" }}</td>
-                        <td><button>fulfilled</button></td>
-                        <td><button>Edit</button></td>
-                        <td><a href="{% url 'deleteproperty' i.id  %}"><button>Delete</button></a></td>
-                  
-                    </tr>
-                    {% endfor %}    
-                   
-                    </tbody>
-                  </table>
+<div class="dashboard_Card">
+
+  <!-- Tab Buttons -->
+  <div class="tab-bar" style="margin-bottom: 20px;">
+    <button class="tab active" onclick="showTab('pending', event)">Pending Ads ({{ pending_ads|length }})</button>
+    <button class="tab" onclick="showTab('approved', event)">Listed Ads ({{ approved_ads|length }})</button>
+  </div>
+
+  <!-- Pending Tab -->
+  <div id="pending" class="tab-content" style="display: block;">
+    {% for i in pending_ads %}
+      <div class="card" style="background: #fefefe; margin-bottom: 10px; padding: 10px;">
+        <h4>{{ i.title }}</h4>
+        <p>{{ i.address }}</p>
+        <p style="color: red;">Rs. {{ i.price }}</p>
+        <div class="ed d-flex m-2 p-2">
+          <a href="#" class="mx-auto text-dark "><i class="fa-solid fa-pen-to-square"></i></a>
+          <a href="{% url 'deleteproperty' i.id %}" class="mx-auto text-dark "><i class="fa-solid fa-trash"></i></a>
         </div>
-    </div>
+      </div>
+    {% empty %}
+      <p>No pending ads.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Approved Tab -->
+  <div id="approved" class="tab-content" style="display: none;">
+    {% for i in approved_ads %}
+      <div class="card" style="background: #f2fff2; margin-bottom: 10px; padding: 10px;">
+        <h4>{{ i.title }}</h4>
+        <p>{{ i.address }}</p>
+        <p style="color: green;">Rs. {{ i.price }}</p>
+        <div class="ed d-flex m-2 p-2">
+          <a href="#" class="mx-auto text-dark "><i class="fa-solid fa-pen-to-square"></i></a>
+          <a href="{% url 'deleteproperty' i.id %}" class="mx-auto text-dark "><i class="fa-solid fa-trash"></i></a>
+        </div>
+     
+      </div>
+    {% empty %}
+      <p>No approved ads.</p>
+    {% endfor %}
+  </div>
+
 </div>
-{% endblock content %}
+
+<!-- JavaScript for tab switch -->
+<script>
+  function showTab(tabId, event) {
+    const tabs = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab');
+
+    tabs.forEach(tab => tab.style.display = 'none');
+    buttons.forEach(btn => btn.classList.remove('active'));
+
+    document.getElementById(tabId).style.display = 'block';
+    event.target.classList.add('active');
+  }
+</script>
+{% endblock %}

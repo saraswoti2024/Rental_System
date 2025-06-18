@@ -155,7 +155,12 @@ def landlord_home(request):
 @landlord_required
 def landlord_dashboard(request):
     data = property_post.objects.all()
+    pending_ads = property_post.objects.filter(is_approved=False)
+    approved_ads = property_post.objects.filter(is_approved=True)
+
     context = {
+        'pending_ads': pending_ads,
+        'approved_ads': approved_ads,
         'property' : data,
     }
     return render(request,'UI/Ldashboard.html',context)
@@ -211,3 +216,10 @@ def Room(request):
         'room' : data
     }
     return render(request,'UI/Room.html',context)
+
+def edit_ldashboard(request):
+    return render(request,'UI/edit.html')
+
+def my_ads(request):
+
+    return render(request, 'my_ads.html', context)
