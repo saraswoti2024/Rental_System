@@ -16,7 +16,7 @@
         <p>{{ i.address }}</p>
         <p style="color: red;">Rs. {{ i.price }}</p>
         <div class="ed d-flex m-2 p-2">
-          <a href="#" class="mx-auto text-dark "><i class="fa-solid fa-pen-to-square"></i></a>
+          <a href="{% url 'edit_ldashboard' i.id %}" class="mx-auto text-dark "><i class="fa-solid fa-pen-to-square"></i></a>
           <a href="{% url 'deleteproperty' i.id %}" class="mx-auto text-dark "><i class="fa-solid fa-trash"></i></a>
         </div>
       </div>
@@ -33,7 +33,7 @@
         <p>{{ i.address }}</p>
         <p style="color: green;">Rs. {{ i.price }}</p>
         <div class="ed d-flex m-2 p-2">
-          <a href="#" class="mx-auto text-dark "><i class="fa-solid fa-pen-to-square"></i></a>
+          <a href="{% url 'edit_ldashboard' i.id %}" class="mx-auto text-dark "><i class="fa-solid fa-pen-to-square"></i></a>
           <a href="{% url 'deleteproperty' i.id %}" class="mx-auto text-dark "><i class="fa-solid fa-trash"></i></a>
         </div>
      

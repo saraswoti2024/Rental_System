@@ -1,4 +1,156 @@
 {% extends "common.html" %}
 {% block content %}
-  
+{% load static %}
+
+
+<div class="form-container m-4 p-4 mx-auto">
+  <form action="{% url 'edit_ldashboard' data.id  %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if messages %}
+      {% for m in messages  %}
+        <div>{{m}}</div>
+      {% endfor %}
+    {% endif %}
+    <div>
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" placeholder="Enter here..."  value="{{data.title}}"required>
+    </div>
+    <div>
+      <label for="phone">phone</label>
+      <input type="phone" id="phone" name="phone" placeholder="Nepal Number" value="{{data.phone}}" required>
+    </div>
+
+    <div>
+        <label for="location"> Location</label>
+        <select id="location" name="location" value="{{data.location}}" required>
+          <option value="">Select or type</option>
+          <option>Dharmasthali, Tarakeshwar, Kathmandu</option>
+          <option>Tokha, Kathmandu</option>
+          <option>Nepaltar (Tarkeshwar), Kathmandu</option>
+          <option>Chandra Surya Marg, कोट देवी, Jadibuti</option>
+          <option>Maharajgunj Dhapasi Bansbari, Basundhara Area</option>
+        </select>
+      </div>
+
+    <div>
+        <label for="area">Tole/Area</label>
+        <input type="text" id="area" name="area" placeholder="eg. Samakhushi" value="{{data.area}}">
+      </div>
+    <div>
+    
+    <!-- images -->
+<!-- Main Photo Upload -->
+<label>Main Photo</label>
+{% if data.main_photo and data.main_photo.url  %}
+  <input type="file" name="main_photo" accept="image/*" value="" >
+  <img src="{{data.main_photo.url}}" alt="" height="50px" width="50px">
+{% else %}
+  <p>no images</p>
+{% endif %}
+<br>
+
+<label>Photo1 *if any</label>
+{% if data.photo1 and data.photo1.url  %}
+<input type="file" name="photo1" accept="image/*" value="" >
+  <img src="{{data.photo1.url}}" alt="" height="50px" width="50px">
+{% else %}
+  <p>no images</p>
+{% endif %}
+<br>
+
+<label>photo2 *if any</label>
+{% if data.photo2 and data.photo2.url  %}
+<input type="file" name="photo2" accept="image/*" value="" >
+  <img src="{{data.photo2.url}}" alt="" height="50px" width="50px">
+{% else %}
+  <p>no images</p>
+{% endif %}
+<br>
+
+
+<label>photo3 *if any</label>
+{% if data.photo3 and data.photo3.url  %}
+<input type="file" name="photo3" accept="image/*" value="">
+  <img src="{{data.photo3.url}}" alt="" height="50px" width="50px">
+{% else %}
+  <p>no images</p>
+{% endif %}
+<br>
+
+<label>photo4 *if any</label>
+{% if data.photo4 and data.photo4.url  %}
+<input type="file" name="photo4" accept="image/*" value="">
+  <img src="{{data.photo4.url}}" alt="" height="50px" width="50px">
+{% else %}
+  <p>no images</p>
+{% endif %}
+<br>
+
+   <!-- ends -->
+
+   <label for="video">Video</label>
+   {% if data.video and data.video.url  %}
+    <input type="file" name="video" accept="video/*" value="{{data.video}}">
+     <video src="{{data.video.url}}" width="50px" height="50px" controls></video>
+   {% else %}
+     <p>no video</p>
+   {% endif %}
+   <br>
+
+      <label for="propertytype">Property Type</label>
+      <select id="propertytype" name="propertytype" required>
+        <option value="">Select or type</option>
+        <option {% if data.property_type == "Room" %}selected{% endif %}>Room</option>
+        <option {% if data.property_type == "Flat" %}selected{% endif %}>Flat</option>
+        <option {% if data.property_type == "House" %}selected{% endif %}>House</option>
+        <option {% if data.property_type == "Apartment" %}selected{% endif %}>Apartment</option>
+        <option {% if data.property_type == "office_space" %}selected{% endif %}>office_space</option>
+        <option {% if data.property_type == "lands" %}selected{% endif %}>lands</option>
+        <option {% if data.property_type == "shutters" %}selected{% endif %}>shutters</option>
+        <option {% if data.property_type == "Commercial_Property" %}selected{% endif %}>Commercial_Property</option>
+        <option {% if data.property_type == "Resturant" %}selected{% endif %}>Resturant</option>
+
+        <option>others</option>
+      </select>
+    </div>
+
+    <div>
+        <label for="price">Property Price</label>
+        <input type="number" id="price" name="price" placeholder="Eg. 5000" value="{{data.price}}" required>
+      </div>
+
+      <div>
+        <label for="facities">Facilities</label>
+        <label><input type="checkbox" name="facilities[]" value="GYM" {% if 'GYM' in data.facilities %}checked{% endif %} > GYM</label>
+        <label><input type="checkbox" name="facilities[]" value="Swimming Pool" {% if 'Swimming Pool' in data.facilities %}checked{% endif %} > Swimming Pool</label>
+        <label><input type="checkbox" name="facilities[]" value="School" {% if 'School' in data.facilities %}checked{% endif %} > School</label>
+        <label><input type="checkbox" name="facilities[]" value="Banquet Hall" {% if 'Banquet Hall' in data.facilities %}checked{% endif %} > Banquet Hall</label>
+        <label><input type="checkbox" name="facilities[]" value="Hospital" {% if 'Hospital' in data.facilities %}checked{% endif %} > Hospital</label>
+        <label><input type="checkbox" name="facilities[]" value="College" {% if 'College' in data.facilities %}checked{% endif %} > College</label>
+      </div>
+
+    <div class="full-width">
+      <label for="message">Description</label>
+      <textarea id="message" name="message" placeholder="Description about the property">{{data.extra_info}}</textarea>
+    </div>
+
+    <button class="button2" type="submit">Submit</button>
+  </form>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('#location').select2({
+      placeholder: "Select or type",
+      allowClear: true
+    });
+
+    $('#propertytype').select2({
+      placeholder: "Select or type",
+      allowClear: true
+    });
+  });
+</script>
+
 {% endblock content %}

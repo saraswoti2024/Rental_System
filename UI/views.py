@@ -217,6 +217,59 @@ def Room(request):
     }
     return render(request,'UI/Room.html',context)
 
-def edit_ldashboard(request):
-    return render(request,'UI/edit.html')
+def edit_ldashboard(request,id):
+    try:
+        data = property_post.objects.get(id=id)
+        if request.method == 'POST' and request.FILES:
+            data = property_post.objects.get(id=id)
+            if 'title' in request.POST:
+                data.title = request.POST['title']
+            if 'location' in request.POST:
+                data.address = request.POST['location']
+            if 'property_type' in request.POST:
+                data.property_type = request.POST['property_type']
+            if 'phone' in request.POST:
+                data.phone = request.POST['phone']
+            if 'facilities' in request.POST:
+                data.facilities = request.POST.getlist('facilities')
+            if 'price' in request.POST:
+                data.price = request.POST['price']
+            if 'video' in request.FILES:
+                data.video = request.FILES.get('video')
+            if 'main_photo' in request.FILES:
+                data.main_photo = request.FILES.get('main_photo')
+            if 'photo1' in request.FILES:
+                data.photo1 = request.FILES.get('photo1')
+            if 'photo2' in request.FILES:
+                data.photo2 = request.FILES.get('photo2')
+            if 'photo3' in request.FILES:
+                data.photo3 = request.FILES.get('photo3')
+            if 'photo4' in request.FILES:
+                data.photo4 = request.FILES.get('photo4')
+            if 'extra_info' in request.POST:
+                data.extra_info = request.POST['extra_info']
+            if 'area' in request.FILES:
+                data.area = request.POST['area']
+            if 'mainphoto' in request.FILES and not is_valid_image('mainphoto'):
+                messages.error(request,'must be image')
+            if 'photo1' in request.FILES and not is_valid_image('photo1'):
+                messages.error(request,'must be image')
+            if 'photo2' in request.FILES and not is_valid_image('photo2'):
+                messages.error(request,'must be image')
+            if  'photo3' in request.FILES and not is_valid_image('photo3'):
+                messages.error(request,'must be image')
+            if 'photo4' in request.FILES and not is_valid_image('photo4'):
+                messages.error(request,'must be image')
+
+            if 'video' in request.FILES and not is_valid_image('video'):
+                messages.error(request,'must be video')
+
+            data.full_clean()
+            data.save()
+            messages.success(request,'Property edited successfully!')
+            return redirect('edit_ldashboard',data.id)
+    except Exception as e:
+        messages.error(request,f'{str(e)}')
+        return redirect('edit_ldashboard',data.id)
+    return render(request,'UI/edit.html',{'data':data,})
 
