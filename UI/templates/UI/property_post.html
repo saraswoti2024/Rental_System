@@ -25,11 +25,9 @@
         <label for="location"> Location</label>
         <select id="location" name="location" required>
           <option value="">Select or type</option>
-          <option>Dharmasthali, Tarakeshwar, Kathmandu</option>
-          <option>Tokha, Kathmandu</option>
-          <option>Nepaltar (Tarkeshwar), Kathmandu</option>
-          <option>Chandra Surya Marg, कोट देवी, Jadibuti</option>
-          <option>Maharajgunj Dhapasi Bansbari, Basundhara Area</option>
+          {% for i in places  %}
+        `     <option>{{i}}</option>
+          {% endfor %}
         </select>
       </div>
 

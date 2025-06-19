@@ -9,10 +9,11 @@
   </div>
 
   <!-- Pending Tab -->
-  <div id="pending" class="tab-content" style="display: block;">
+  <div id="pending" class="tab-content" style="display: flex; flex-wrap: wrap;">
     {% for i in pending_ads %}
       <div class="card" style="background: #fefefe; margin-bottom: 10px; padding: 10px;">
         <h4>{{ i.title }}</h4>
+        <img src="{{i.main_photo.url}}" alt="" style="height: 200px; width: 200px;">
         <p>{{ i.address }}</p>
         <p style="color: red;">Rs. {{ i.price }}</p>
         <div class="ed d-flex m-2 p-2">
@@ -30,6 +31,7 @@
     {% for i in approved_ads %}
       <div class="card" style="background: #f2fff2; margin-bottom: 10px; padding: 10px;">
         <h4>{{ i.title }}</h4>
+        <img src="{{i.main_photo.url}}" alt="" height="10px" width="10px">
         <p>{{ i.address }}</p>
         <p style="color: green;">Rs. {{ i.price }}</p>
         <div class="ed d-flex m-2 p-2">

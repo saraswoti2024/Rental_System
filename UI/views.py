@@ -6,6 +6,9 @@ from .decorators import *
 from django.core.mail import send_mail,EmailMessage
 from django.template.loader import render_to_string
 from datetime import datetime
+import os
+import json
+from django.conf import settings
 # Create your views here.
 
 
@@ -111,6 +114,10 @@ def aboutus(request):
 
 @landlord_required
 def addproperty(request):
+    file_path = os.path.join(settings.BASE_DIR, 'UI/static/data/nepal_places.json')
+    f = open(file_path, 'r', encoding='utf-8') 
+    data = json.load(f)
+    places = [f"{item['name']}, {item['city']}" for item in data]
     if request.method == 'POST' and request.FILES:
         title = request.POST['title']
         address = request.POST['location']
@@ -146,7 +153,7 @@ def addproperty(request):
         data.save()
         messages.success(request,'Property added successfully!')
         return redirect('addproperty')
-    return render(request,'UI/property_post.html')
+    return render(request,'UI/property_post.html',{'places':places})
 
 @landlord_required
 def landlord_home(request):
@@ -162,6 +169,7 @@ def landlord_dashboard(request):
         'pending_ads': pending_ads,
         'approved_ads': approved_ads,
         'property' : data,
+        
     }
     return render(request,'UI/Ldashboard.html',context)
 
@@ -219,6 +227,10 @@ def Room(request):
 
 def edit_ldashboard(request,id):
     try:
+        file_path = os.path.join(settings.BASE_DIR, 'UI/static/data/nepal_places.json')
+        f = open(file_path, 'r', encoding='utf-8') 
+        data = json.load(f)
+        places = [f"{item['name']}, {item['city']}" for item in data]
         data = property_post.objects.get(id=id)
         if request.method == 'POST' and request.FILES:
             data = property_post.objects.get(id=id)
@@ -271,5 +283,5 @@ def edit_ldashboard(request,id):
     except Exception as e:
         messages.error(request,f'{str(e)}')
         return redirect('edit_ldashboard',data.id)
-    return render(request,'UI/edit.html',{'data':data,})
+    return render(request,'UI/edit.html',{'data':data,'places':places})
 
