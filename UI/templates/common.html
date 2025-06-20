@@ -57,7 +57,7 @@
               <a href="{% url 'log_out' %}"><h2 class="navtitle1">LOGOUT</h2></a>
           {% endif %}
 
-      {% else %}
+      {% else %} 
           <!-- Not logged in: Show rentseeker UI -->
           <a href="{% url 'home' %}"><h2 class="navtitle">HOME</h2></a>
           <a href="{% url 'house' %}"><h2 class="navtitle">HOUSE</h2></a>
@@ -76,8 +76,6 @@
           <a href="{% url 'log_in' %}"><h2 class="navtitle1">LOGIN</h2></a>
           <a href="{% url 'register1' %}"><h2 class="navtitle1">REGISTER</h2></a>
       {% endif %}
-        
-
         </div>
      </div>   
      <!-- navbar ends -->

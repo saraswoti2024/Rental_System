@@ -18,8 +18,12 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import reverse_lazy
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
+    ##reverselazy garda direct tyo home page ma redirect garyo
+    path('admin/logout/', LogoutView.as_view(next_page=reverse_lazy('home')), name='admin_logout'),
     path('admin/', admin.site.urls),
     path('accounts/',include('accounts.urls')),
     path('',include('UI.urls')),

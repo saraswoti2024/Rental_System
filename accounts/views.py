@@ -28,10 +28,13 @@ class Log_in(View):
                 value = authenticate(username=uname,password=password)
                 if value is not None:
                     login(request,value)
-                    if value.usertype == 'landlord':
+                    if value.is_superuser or value.is_staff:
+                        return redirect('/admin/')
+                    elif value.usertype == 'landlord':
                         return redirect('landlord_home')
                     elif value.usertype == 'rentseeker':
                         return redirect('home')
+                   
                 else:
                     messages.error(request,'password is not valid!')
                     return redirect('log_in')

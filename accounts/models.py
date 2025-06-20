@@ -7,4 +7,4 @@ class CustomUser(AbstractUser):
         ('rentseeker', 'Rentseeker'),
     )
 
-    usertype = models.CharField(max_length=100,choices=user_type)
+    usertype = models.CharField(max_length=100,choices=user_type,default='rentseeker',blank=True,null=True)

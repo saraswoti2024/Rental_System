@@ -4,8 +4,14 @@ from .models import *
 
 @admin.register(property_post)
 class Featured(admin.ModelAdmin):
-    list_display = ['title','address','property_type','user','price','is_approved']
+    list_display = [field.name for field in property_post._meta.fields]
     list_filter = ['is_approved'] #side bar auxa filter garerw herna yes,no wala
     list_editable = ['is_approved'] #direct tick button aauxa bahirw nai vitrw thichi rakhnu pardaian
 
+@admin.register(ShiftHome)
+class Shift_Home(admin.ModelAdmin):
+    list_display = [field.name for field in ShiftHome._meta.fields]
 
+@admin.register(RequestRoom)
+class Shift_Home(admin.ModelAdmin):
+    list_display = [field.name for field in RequestRoom._meta.fields]
