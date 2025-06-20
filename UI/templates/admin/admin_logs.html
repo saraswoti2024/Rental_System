@@ -1,0 +1,10 @@
+<table>
+    <tr><th>User</th><th>Action</th><th>Time</th></tr>
+    {% for log in logs %}
+        <tr>
+            <td>{{ log.user }}</td>
+            <td>{{ log.action }}</td>
+            <td>{{ log.timestamp }}</td>
+        </tr>
+    {% endfor %}
+</table>

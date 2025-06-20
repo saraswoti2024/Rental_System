@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from UI.models import ActivityLog
 import re
 from UI.views import HomeView
 # Create your views here.
@@ -28,6 +29,7 @@ class Log_in(View):
                 value = authenticate(username=uname,password=password)
                 if value is not None:
                     login(request,value)
+                    ActivityLog.objects.create(user=request.user,action =f'logged in')
                     if value.is_superuser or value.is_staff:
                         return redirect('/admin/')
                     elif value.usertype == 'landlord':
@@ -64,7 +66,8 @@ class Register1(View):
                 if CustomUser.objects.filter(username=username).exists():
                     messages.error(request,'username already exists!')
                     return redirect('register1')
-                CustomUser.objects.create_user(first_name = fname,last_name = lname, username=username,email=email , password = password,usertype=role)
+                data = CustomUser.objects.create_user(first_name = fname,last_name = lname, username=username,email=email , password = password,usertype=role)
+                ActivityLog.objects.create(user=request.user,action =f'Registered a new account | {data.username}')
                 messages.success(request,'successfully created!')
                 return redirect('register1')
         except Exception as e:
@@ -72,6 +75,7 @@ class Register1(View):
             return redirect('register1')
 
 def log_out(request):
+    ActivityLog.objects.create(user=request.user,action =f'logged out')
     logout(request)
     return redirect('log_in')
         

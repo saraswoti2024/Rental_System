@@ -49,6 +49,10 @@ def request_room_view(request):
             data = RequestRoom(fullname=fname,phone=phone,email=email,message=message,property_type=propertytype,area=area,location=location)
             data.full_clean()
             data.save()
+            ActivityLog.objects.create(
+                user= request.user if request.user.is_authenticated else None,
+                action = f"Request for Room added ({data.property_type})"
+                )
              ##gmail starts
             subject = "Room Request"
             message = render_to_string('UI/gmail.html',{'name': fname ,'date':datetime.now()})
@@ -93,6 +97,7 @@ def shifthome(request):
                 data = ShiftHome(phone=phone,email=email,message=message,property1 =propertytype,location1=current_location, location2 = location2,bed=bed,sofa=sofa,cupboard=cupboard,tv=tv,table=table,time=time,date=date,booking_type=booking_type)
                 data.full_clean()
                 data.save()
+                ActivityLog.objects.create( user=request.user if request.user.is_authenticated else None,action =f'shift home request added ({data.booking_type})')
                   ##gmail starts
                 subject = "Home Shifting"
                 message = render_to_string('UI/gmail2.html',{'name': email1 ,'date':datetime.now(),'date1': date,'time': time})
@@ -152,6 +157,7 @@ def addproperty(request):
         data = property_post(title=title,address = address, property_type = propertytype,price= price, extra_info = message,area = tole,video=video,main_photo = mainphoto,photo1=photo1,photo2=photo2,photo3=photo3,photo4=photo4,facilities=facilities,phone=phone,user=request.user)
         data.full_clean()
         data.save()
+        ActivityLog.objects.create(user=request.user,action =f'Added property ({data.title})')
         messages.success(request,'Property added successfully!')
         return redirect('addproperty')
     return render(request,'UI/property_post.html',{'places':places})
@@ -278,10 +284,10 @@ def edit_ldashboard(request,id):
 
             data.full_clean()
             data.save()
+            ActivityLog.objects.create(user=request.user,action =f'edited property({data.title})')
             messages.success(request,'Property edited successfully!')
             return redirect('edit_ldashboard',data.id)
     except Exception as e:
         messages.error(request,f'{str(e)}')
         return redirect('edit_ldashboard',data.id)
     return render(request,'UI/edit.html',{'data':data,'places':places})
-

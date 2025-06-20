@@ -15,3 +15,13 @@ class Shift_Home(admin.ModelAdmin):
 @admin.register(RequestRoom)
 class Shift_Home(admin.ModelAdmin):
     list_display = [field.name for field in RequestRoom._meta.fields]
+
+from django.contrib import admin
+from .models import ActivityLog
+
+@admin.register(ActivityLog)
+class ActivityLogAdmin(admin.ModelAdmin):
+    list_display = ['id','user', 'action', 'timestamp']
+    list_filter = ['user', 'timestamp']
+    search_fields = ['action', 'user__username']
+    ordering = ['-timestamp']

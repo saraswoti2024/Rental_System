@@ -84,3 +84,8 @@ class ShiftHome(models.Model):
         if self.date:
             if self.date < timezone.now().date():
                 raise ValidationError({'date': "Date cannot be in the past."})
+
+class ActivityLog(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+    action = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
