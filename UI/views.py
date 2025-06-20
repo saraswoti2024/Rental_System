@@ -10,6 +10,7 @@ import os
 import json
 from django.conf import settings
 # Create your views here.
+from accounts.models import CustomUser
 
 
 def is_valid_image(file):
@@ -148,7 +149,7 @@ def addproperty(request):
         if video and not is_valid_video(video):
             messages.error(request,'must be video')
 
-        data = property_post(title=title,address = address, property_type = propertytype,price= price, extra_info = message,area = tole,video=video,main_photo = mainphoto,photo1=photo1,photo2=photo2,photo3=photo3,photo4=photo4,facilities=facilities,phone=phone)
+        data = property_post(title=title,address = address, property_type = propertytype,price= price, extra_info = message,area = tole,video=video,main_photo = mainphoto,photo1=photo1,photo2=photo2,photo3=photo3,photo4=photo4,facilities=facilities,phone=phone,user=request.user)
         data.full_clean()
         data.save()
         messages.success(request,'Property added successfully!')
@@ -161,9 +162,9 @@ def landlord_home(request):
 
 @landlord_required
 def landlord_dashboard(request):
-    data = property_post.objects.all()
-    pending_ads = property_post.objects.filter(is_approved=False)
-    approved_ads = property_post.objects.filter(is_approved=True)
+    data = property_post.objects.filter(user = request.user)
+    pending_ads = property_post.objects.filter(is_approved=False,user = request.user)
+    approved_ads = property_post.objects.filter(is_approved=True,user = request.user)
 
     context = {
         'pending_ads': pending_ads,
@@ -176,10 +177,9 @@ def landlord_dashboard(request):
 def delete_property(request,id):
      data = get_object_or_404(property_post, id=id) 
      data.delete()
-     return redirect('ldashboard')
 
 def house(request):
-    
+
     data = property_post.objects.filter(property_type="House",is_approved=True).order_by('-date')
     context = {
         'houses' : data

@@ -3,6 +3,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from multiselectfield import MultiSelectField
+from accounts.models import CustomUser
 
 
 def one_hour_later():
@@ -43,6 +44,7 @@ class property_post(models.Model):
     is_approved = models.BooleanField(default=False)
     date = models.DateField(default=current_date)
     time = models.TimeField(default=one_hour_later)
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
