@@ -13,7 +13,7 @@ class Shift_Home(admin.ModelAdmin):
     list_display = [field.name for field in ShiftHome._meta.fields]
 
 @admin.register(RequestRoom)
-class Shift_Home(admin.ModelAdmin):
+class request_room(admin.ModelAdmin):
     list_display = [field.name for field in RequestRoom._meta.fields]
 
 from django.contrib import admin

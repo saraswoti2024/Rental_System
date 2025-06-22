@@ -89,3 +89,9 @@ class ActivityLog(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
     action = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+
+class Fraud_Reports(models.Model):
+    property_name = models.OneToOneField(property_post,on_delete=models.SET_NULL,null=True)
+    message = models.TextField()
+    is_report = models.BooleanField(default=False)
+    

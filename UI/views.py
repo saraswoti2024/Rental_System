@@ -291,3 +291,7 @@ def edit_ldashboard(request,id):
         messages.error(request,f'{str(e)}')
         return redirect('edit_ldashboard',data.id)
     return render(request,'UI/edit.html',{'data':data,'places':places})
+
+def property_detail(request,id):
+    propertyy = property_post.objects.get(id=id)
+    return render(request,'UI/property_detail.html',{'property' : propertyy})
