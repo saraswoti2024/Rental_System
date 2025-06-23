@@ -11,6 +11,7 @@ import json
 from django.conf import settings
 # Create your views here.
 from accounts.models import CustomUser
+from django.contrib.auth.decorators import login_required
 
 
 def is_valid_image(file):
@@ -295,3 +296,41 @@ def edit_ldashboard(request,id):
 def property_detail(request,id):
     propertyy = property_post.objects.get(id=id)
     return render(request,'UI/property_detail.html',{'property' : propertyy})
+
+@login_required(login_url='log_in')
+def report(request,id):
+    propertyy = get_object_or_404(property_post, id=id)  
+    if request.method == 'POST':
+        if Fraud_Reports.objects.filter(reporter_id=request.user,property_name=propertyy).exists():
+            messages.error(request,'you have already submitted the report!')
+            return redirect('report',id=propertyy.id)
+        message = request.POST.get('reason')
+        data = Fraud_Reports.objects.create(reporter_id=request.user,property_name=propertyy,message=message)
+        data.full_clean()
+        data.save()
+        value = Fraud_Reports.objects.filter(property_name=propertyy).count()
+        if value>4 and  not propertyy.is_reports :
+            notify_admin_of_heavy_reports(propertyy, value)
+            propertyy.is_reports= True
+            propertyy.save()
+        messages.success(request,'Reported Sucessfully!')
+        return redirect('home')
+    return render(request,'UI/report.html',{'property' : propertyy})
+
+def notify_admin_of_heavy_reports(property_id,count):
+    subject = f"🚨 ALERT: Property '{property_id.title}' reported {count} times!"
+    message = f"""
+    Attention Admin,
+
+    The property titled "{property_id.title}" has received {count} reports.
+    It may require review or action.
+    Property ID: {property_id.id}
+    View it in the admin panel or contact the user.
+
+    Regards,
+    Rental Safety System
+    """
+    from_email = 'saraswotikhadka2k2@gmail.com'
+    recipient_list = ['optimistsaraswoti@gmail.com']
+    emailmsg = EmailMessage(subject,message,from_email,recipient_list)
+    emailmsg.send(fail_silently=False)

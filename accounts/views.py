@@ -67,7 +67,7 @@ class Register1(View):
                     messages.error(request,'username already exists!')
                     return redirect('register1')
                 data = CustomUser.objects.create_user(first_name = fname,last_name = lname, username=username,email=email , password = password,usertype=role)
-                ActivityLog.objects.create(user=request.user,action =f'Registered a new account | {data.username}')
+                ActivityLog.objects.create(user=data, action=f'Registered a new account | {data.username}')
                 messages.success(request,'successfully created!')
                 return redirect('register1')
         except Exception as e:

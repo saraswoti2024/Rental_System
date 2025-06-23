@@ -25,3 +25,13 @@ class ActivityLogAdmin(admin.ModelAdmin):
     list_filter = ['user', 'timestamp']
     search_fields = ['action', 'user__username']
     ordering = ['-timestamp']
+
+@admin.register(Fraud_Reports)
+class Fraud_Report(admin.ModelAdmin):
+    list_display = ['id','reporter_id', 'property_name', 'message', 'timestamp']
+    list_filter = ['property_name', 'reporter_id','timestamp']
+    search_fields = ['reporter_id', 'property_name__title', 'message']
+
+    def message_preview(self, obj):
+        return obj.message[:50] + ('...' if len(obj.message) > 50 else '')
+    message_preview.short_description = "Message"

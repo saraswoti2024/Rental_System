@@ -45,6 +45,7 @@ class property_post(models.Model):
     date = models.DateField(default=current_date)
     time = models.TimeField(default=one_hour_later)
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    is_reports = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -91,7 +92,9 @@ class ActivityLog(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
 class Fraud_Reports(models.Model):
-    property_name = models.OneToOneField(property_post,on_delete=models.SET_NULL,null=True)
+    property_name = models.ForeignKey(property_post,on_delete=models.CASCADE,null=True)
     message = models.TextField()
+    reporter_id = models.ForeignKey(CustomUser,on_delete=models.CASCADE,blank=True,null=True)
     is_report = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True,blank=True,null=True)  # when the report was made
     

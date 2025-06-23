@@ -19,4 +19,5 @@ urlpatterns = [
     path('shutter/',shutter,name="shutter"),
     path('edit_ldashboard/<int:id>',edit_ldashboard,name="edit_ldashboard"),        
     path('property_detail/<int:id>',property_detail,name="property_detail"),        
+    path('report/<int:id>',report,name="report"),        
 ]
