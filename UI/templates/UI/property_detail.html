@@ -50,8 +50,13 @@
 
   <!-- Property Details -->
   <section class="property-details">
-    <p class="text-muted">{{ property.brand.title }}</p>
-    <h1 class="property-title">{{ property.title }}</h1>
+    <div class="d d-flex flex-wrap">
+    <h1 class="property-title">{{ property.title }} </h1>
+    <form method="post">
+    <button class="btn btn-danger px-3 mx-5">Book</button>
+     </form>
+  </div>
+
     <p class="property-description">{{ property.desc|safe }}</p>
 
     <!-- location -->

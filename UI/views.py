@@ -24,9 +24,51 @@ class HomeView(View):
     def post(self,request):
         pass
     def get(self,request): 
-        data = property_post.objects.filter(is_approved=True).order_by('-date')[:5]
+        file_path = os.path.join(settings.BASE_DIR, 'UI/static/data/nepal_places.json')
+        f = open(file_path, 'r', encoding='utf-8') 
+        data_loc = json.load(f)
+        places = [f"{item['name']}, {item['city']}" for item in data_loc]
+        feature = property_post.objects.filter(is_approved=True).order_by('-date')[:5]
+        searched = False
+        data = None
+        title = request.GET.get('title')
+        price = request.GET.get('price')
+        propertytype = request.GET.get('propertytype')
+        location = request.GET.get('location')
+        
+        if title or price or propertytype or location:
+            data = property_post.objects.filter(is_approved=True)
+            searched = True
+            
+            if title:
+                data = data.filter(title__icontains=title)
+            else:
+                data = property_post.objects.filter(is_approved=True)
+            
+            if price :
+                try:
+                        min_price, max_price = map(int, price.replace(" ", "").split('-'))
+                        data = data.filter(price__gte=min_price, price__lte=max_price)
+                except:
+                        pass  # Don't crash if input is bad
+            else:
+                data = property_post.objects.filter(is_approved=True)
+            
+            if propertytype :
+                data = data.filter(property_type__iexact=propertytype) 
+            else:
+                data = property_post.objects.filter(is_approved=True)
+            
+            if location :
+                data = data.filter(address__icontains=location) 
+            else:
+                data = property_post.objects.filter(is_approved=True) 
+            
         context = {
-            'feature' : data,
+            'data' : data,
+            'feature' : feature,
+            'searched' : searched,
+           	'places' : places, 
         }
         return render(request,'UI/home.html',context)
 

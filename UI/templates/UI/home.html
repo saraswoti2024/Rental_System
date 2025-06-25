@@ -1,8 +1,107 @@
 {% extends "common.html" %}
-
-
 {% block content %}
 {% load static %}
+<style>
+.property-container {
+  display: flex;
+  gap: 20px;
+}
+
+.filter-form {
+  width: 25%;
+}
+
+.property-results {
+  width: 75%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+</style>
+
+{% if searched %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-3">
+      <h4>Filter Properties</h4>
+      <form method="get" action="">
+        
+        <!-- Title -->
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" name="title" placeholder="Enter title" value="{{ request.GET.title }}">
+        </div>
+    
+        <!-- Location -->
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <select id="location" name="location" >
+            <option value="">All</option>
+            {% for i in places  %}
+               <option {% if request.GET.location == i %}
+               selected
+               {% endif %}>{{i}}</option>
+            {% endfor %}
+          </select>
+        </div>
+    
+        <!-- Property Type -->
+        <div class="mb-3">
+          <label for="propertytype" class="form-label">Property Type</label>
+          <select id="propertytype" name="propertytype" >
+            <option value="">All</option>
+            <option>Room</option>
+            <option>Flat</option>
+            <option>House</option>
+            <option>Apartment</option>
+            <option>office_space</option>
+            <option>lands</option>
+            <option>shutters</option>
+            <option>Commercial Property</option>
+            <option>Resturant</option>
+    
+            <option>others</option>
+          </select>
+        </div>
+    
+        <!-- Price Range -->
+        <div class="mb-3">
+          <label class="form-label">Price Range (e.g. 10000-20000)</label>
+          <input type="text" class="form-control" name="price" value="{{ request.GET.price }}">
+        </div>
+    
+        <button type="submit" class="btn btn-primary w-100">Apply Filter</button>
+      </form>
+    </div>
+    <!-- right -->
+    <div class="col-md-9">
+      <h4>{% if searched %}Search Results{% else %}All Properties{% endif %}</h4>
+      <div class="row">
+        {% for i in data %}
+          <div class="col-md-4 mb-4 ">
+            <div class="cardb border border-3 border-dark">
+              <a href="{% url 'property_detail' i.id %}">
+                <img src="{{ i.main_photo.url }}" class="card-img-top" alt="{{ i.title }}">
+              </a>
+              <div class="card-body">
+                <h5 class="card-title">{{ i.title }}</h5>
+                <p class="card-text"><i class="fa-solid fa-location-dot"></i> {{ i.address }}</p>
+                <p><strong>Type:</strong> {{ i.property_type }}</p>
+                <p><strong>Price:</strong> Rs. {{ i.price }}</p>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <p>No properties found matching your filters.</p>
+        {% endfor %}
+      </div>
+    </div>
+    
+     <!-- right end -->
+  </div>
+</div>
+
+{% else %}
 <div class="carousel">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
         <div class="carousel-indicators">
@@ -34,26 +133,45 @@
         </button>
       </div>
       <div class="search">
-        <form action="" class="searchbar">
+        <form action="" class="searchbar" method="get">
           
           <div class="field icon-input">
             <i class="fa-solid fa-heading"></i>
-            <input type="text" placeholder="Search by title">
+            <input type="text" name="title" placeholder="Search by title">
           </div>
       
           <div class="field icon-input">
-            <i class="fa-solid fa-location-dot"></i>
-            <input type="text" placeholder="Search by location">
+              <label for="location">Location</label>
+              <select id="location" name="location" >
+                <option value="">Select or type</option>
+                {% for i in places  %}
+                   <option {% if request.GET.location == i %}
+                   selected
+                   {% endif %}>{{i}}</option>
+                {% endfor %}
+              </select>
           </div>
       
           <div class="field icon-input">
             <i class="fa-solid fa-money-bill-wave"></i>
-            <input type="text" placeholder="Price range">
+            <input type="text" name="price" placeholder="Eg: 1000-5000">
           </div>
       
           <div class="field icon-input">
-            <i class="fa-solid fa-building"></i>
-            <input type="text" placeholder="Property type">
+            <label for="propertytype">Property Type</label>
+            <select id="propertytype" name="propertytype" >
+              <option value="">All</option>
+              <option>Room</option>
+              <option>Flat</option>
+              <option>House</option>
+              <option>Apartment</option>
+              <option>office_space</option>
+              <option>lands</option>
+              <option>shutters</option>
+              <option>Commercial Property</option>
+              <option>Resturant</option>
+              <option>others</option>
+            </select>
           </div>
       
           <div class="field">
@@ -62,14 +180,12 @@
           
         </form>
       </div>
-      
     </div>
  </div>
- <div class="featured">
-    <h1 class='f-title'>Featured Property</h1>
-    <div class="cards">
+ <div class="featured ">
+  <h1 class='f-title'>Featured Property</h1>
     {% for i in feature  %}
-    <div class="card">
+    <div class="card ">
         <a href="{% url 'property_detail' i.id %}"><img src="{{i.main_photo.url}}" alt="" ></a>
         <h3 class="feature-topic">{{i.title}}</h3>
         <p class="location"><i class="fa-solid fa-location-dot"></i>{{i.address}}</p>
@@ -80,6 +196,7 @@
         </div>   
     </div>
     {% endfor %}
+    {% endif %}
 </div>
  </div>
 {% endblock content %}
