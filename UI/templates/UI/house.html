@@ -5,7 +5,7 @@
     <div class="cards">
         {% for i in houses  %}
         <div class="card">
-            <img src="{{i.main_photo.url}}" alt="" >
+            <a href="{% url 'property_detail' i.id %}"><img src="{{i.main_photo.url}}" alt="" ></a>
             <h3 class="feature-topic">{{i.title}}</h3>
             <p class="location"><i class="fa-solid fa-location-dot"></i>{{i.address}}</p>
             <div class="card-inner">
