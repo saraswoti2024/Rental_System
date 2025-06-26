@@ -369,3 +369,11 @@ def notify_admin_of_heavy_reports(property_id,count):
     recipient_list = ['optimistsaraswoti@gmail.com']
     emailmsg = EmailMessage(subject,message,from_email,recipient_list)
     emailmsg.send(fail_silently=False)
+
+
+def profile(request):
+    if request.user.user_type == 'landlord':
+        Profile.objects.get_or_create(user=request.user)
+    if request.user.user_type == 'rentseeker':
+        Profile.objects.get_or_create(user=request.user)
+    return render(request,'UI/profile.html')

@@ -98,3 +98,6 @@ class Fraud_Reports(models.Model):
     is_report = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True,blank=True,null=True)  # when the report was made
     
+class Profile(models.Model):
+    user = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="profile_img")
