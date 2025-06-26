@@ -6,7 +6,7 @@
 
 .navbar2{
     display: flex;
-    gap: 20px;
+    gap: 10px;
 }
 .logo{
     margin-bottom: 10px;
@@ -168,7 +168,7 @@
 
 .card img{
     width: 100%;                 /* Image stays within card */
-    height: auto; 
+    height: 300px; 
     display: block;              /* Remove extra spacing */
     object-fit: cover;  
 }

@@ -30,7 +30,7 @@
   <div id="approved" class="tab-content" style="display: none;">
     
     {% for i in approved_ads %}
-      <div class="card" style="background: #f2fff2; margin-bottom: 10px; padding: 10px;">
+      <div class="card" style="background: #f2fff2; margin-bottom: 10px; padding: 10px; ">
         <h4>{{ i.title }}</h4>
         <a href="{% url 'property_detail' i.id %}"><img src="{{i.main_photo.url}}" alt="" height="10px" width="10px"></a>
         <p>{{ i.address }}</p>

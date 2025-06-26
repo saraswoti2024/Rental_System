@@ -1,165 +1,115 @@
 {% extends "common.html" %}
 {% block content %}
 {% load static %}
+
 <style>
-.property-container {
-  display: flex;
-  gap: 20px;
+  .property-container {
+    display: flex;
+    gap: 20px;
+  }
+
+  .property-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .cardb {
+    transition: box-shadow 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .cardb {
+  max-width: 100%;
+  min-height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
-.filter-form {
-  width: 25%;
-}
 
-.property-results {
-  width: 75%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
+  .cardb:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+
+  .cardb img {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .card-body {
+    padding: 15px;
+  }
+
+  .searchbar .field {
+    margin-bottom: 15px;
+  }
+
+  .searchbar .field input,
+  .searchbar .field select {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .featured .cardn {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background-color: #fff;
+    text-align: center;
+  }
+
+  .featured img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .feature-topic {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    font-weight: 600;
+  }
+
+  .card-inner {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: #555;
+  }
 </style>
 
 {% if searched %}
 <div class="container mt-5">
   <div class="row">
+    <!-- Filter Form -->
     <div class="col-md-3">
-      <h4>Filter Properties</h4>
-      <form method="get" action="">
-        
-        <!-- Title -->
-        <div class="mb-3">
-          <label for="title" class="form-label">Title</label>
-          <input type="text" class="form-control" name="title" placeholder="Enter title" value="{{ request.GET.title }}">
-        </div>
-    
-        <!-- Location -->
-        <div class="mb-3">
-          <label for="location" class="form-label">Location</label>
-          <select id="location" name="location" >
-            <option value="">All</option>
-            {% for i in places  %}
-               <option {% if request.GET.location == i %}
-               selected
-               {% endif %}>{{i}}</option>
-            {% endfor %}
-          </select>
-        </div>
-    
-        <!-- Property Type -->
-        <div class="mb-3">
-          <label for="propertytype" class="form-label">Property Type</label>
-          <select id="propertytype" name="propertytype" >
-            <option value="">All</option>
-            <option>Room</option>
-            <option>Flat</option>
-            <option>House</option>
-            <option>Apartment</option>
-            <option>office_space</option>
-            <option>lands</option>
-            <option>shutters</option>
-            <option>Commercial Property</option>
-            <option>Resturant</option>
-    
-            <option>others</option>
-          </select>
-        </div>
-    
-        <!-- Price Range -->
-        <div class="mb-3">
-          <label class="form-label">Price Range (e.g. 10000-20000)</label>
-          <input type="text" class="form-control" name="price" value="{{ request.GET.price }}">
-        </div>
-    
-        <button type="submit" class="btn btn-primary w-100">Apply Filter</button>
-      </form>
-    </div>
-    <!-- right -->
-    <div class="col-md-9">
-      <h4>{% if searched %}Search Results{% else %}All Properties{% endif %}</h4>
-      <div class="row">
-        {% for i in data %}
-          <div class="col-md-4 mb-4 ">
-            <div class="cardb border border-3 border-dark">
-              <a href="{% url 'property_detail' i.id %}">
-                <img src="{{ i.main_photo.url }}" class="card-img-top" alt="{{ i.title }}">
-              </a>
-              <div class="card-body">
-                <h5 class="card-title">{{ i.title }}</h5>
-                <p class="card-text"><i class="fa-solid fa-location-dot"></i> {{ i.address }}</p>
-                <p><strong>Type:</strong> {{ i.property_type }}</p>
-                <p><strong>Price:</strong> Rs. {{ i.price }}</p>
-              </div>
-            </div>
+      <div class="cardn p-3 shadow-sm">
+        <h5 class="mb-3">Filter Properties</h5>
+        <form method="get" action="">
+          <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" name="title" placeholder="Enter title" value="{{ request.GET.title }}">
           </div>
-        {% empty %}
-          <p>No properties found matching your filters.</p>
-        {% endfor %}
-      </div>
-    </div>
-    
-     <!-- right end -->
-  </div>
-</div>
 
-{% else %}
-<div class="carousel">
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-      
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="{% static 'images/house.jpg' %}" class="d-block w-100" alt="First slide">
+          <div class="mb-3">
+            <label class="form-label">Location</label>
+            <select class="form-select" name="location">
+              <option value="">All</option>
+              {% for i in places %}
+              <option {% if request.GET.location == i %}selected{% endif %}>{{ i }}</option>
+              {% endfor %}
+            </select>
           </div>
-          <div class="carousel-item">
-            <img src="{% static 'images/house1.jpeg' %}" class="d-block w-100" alt="Second slide">
-          </div>
-          <div class="carousel-item">
-            <img src="{% static 'images/house.jpg' %}" class="d-block w-100" alt="Third slide">
-          </div>
-        </div>
-      
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-      
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-      <div class="search">
-        <form action="" class="searchbar" method="get">
-          
-          <div class="field icon-input">
-            <i class="fa-solid fa-heading"></i>
-            <input type="text" name="title" placeholder="Search by title">
-          </div>
-      
-          <div class="field icon-input">
-              <label for="location">Location</label>
-              <select id="location" name="location" >
-                <option value="">Select or type</option>
-                {% for i in places  %}
-                   <option {% if request.GET.location == i %}
-                   selected
-                   {% endif %}>{{i}}</option>
-                {% endfor %}
-              </select>
-          </div>
-      
-          <div class="field icon-input">
-            <i class="fa-solid fa-money-bill-wave"></i>
-            <input type="text" name="price" placeholder="Eg: 1000-5000">
-          </div>
-      
-          <div class="field icon-input">
-            <label for="propertytype">Property Type</label>
-            <select id="propertytype" name="propertytype" >
+
+          <div class="mb-3">
+            <label class="form-label">Property Type</label>
+            <select class="form-select" name="propertytype">
               <option value="">All</option>
               <option>Room</option>
               <option>Flat</option>
@@ -173,30 +123,138 @@
               <option>others</option>
             </select>
           </div>
-      
-          <div class="field">
-            <button type="submit">Search</button>
+
+          <div class="mb-3">
+            <label class="form-label">Price Range</label>
+            <input type="text" class="form-control" name="price" value="{{ request.GET.price }}" placeholder="Eg: 10000-20000">
           </div>
-          
+
+          <button type="submit" class="btn btn-primary w-100">Apply Filter</button>
         </form>
       </div>
     </div>
- </div>
- <div class="featured ">
-  <h1 class='f-title'>Featured Property</h1>
-    {% for i in feature  %}
-    <div class="card ">
-        <a href="{% url 'property_detail' i.id %}"><img src="{{i.main_photo.url}}" alt="" ></a>
-        <h3 class="feature-topic">{{i.title}}</h3>
-        <p class="location"><i class="fa-solid fa-location-dot"></i>{{i.address}}</p>
+
+    <!-- Search Results -->
+    <div class="col-md-9">
+      <h4 class="mb-4">{% if searched %}Search Results{% else %}All Properties{% endif %}</h4>
+      <div class="row justify-content-center">
+        {% for i in data %}
+        <div class="col-md-4 mb-4 d-flex align-items-stretch">
+          <div class="cardb border border-3 border-dark w-100">
+            <a href="{% url 'property_detail' i.id %}">
+              <img src="{{ i.main_photo.url }}" class="card-img-top" alt="{{ i.title }}">
+            </a>
+            <div class="card-body">
+              <h5 class="card-title">{{ i.title }}</h5>
+              <p class="card-text"><i class="fa-solid fa-location-dot"></i> {{ i.address }}</p>
+              <p><strong>Type:</strong> {{ i.property_type }}</p>
+              <p><strong>Price:</strong> Rs. {{ i.price }}</p>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p>No properties found matching your filters.</p>
+        {% endfor %}
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+{% else %}
+<!-- Homepage Carousel -->
+<div class="carousel mb-5">
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'images/house.jpg' %}" class="d-block w-100" alt="Slide 1">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/house1.jpeg' %}" class="d-block w-100" alt="Slide 2">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/house.jpg' %}" class="d-block w-100" alt="Slide 3">
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+<!-- Search Section -->
+<div class="container mb-5">
+  <form action="" method="get" class="searchbar p-4 shadow-sm bg-light rounded">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <input type="text" class="form-control" name="title" placeholder="Search by title">
+      </div>
+      <div class="col-md-3">
+        <select name="location" class="form-select">
+          <option value="">Select location</option>
+          {% for i in places %}
+            <option {% if request.GET.location == i %}selected{% endif %}>{{ i }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2">
+        <input type="text" name="price" class="form-control" placeholder="Eg: 1000-5000">
+      </div>
+      <div class="col-md-3">
+        <select name="propertytype" class="form-select">
+          <option value="">All Types</option>
+          <option>Room</option>
+          <option>Flat</option>
+          <option>House</option>
+          <option>Apartment</option>
+          <option>office_space</option>
+          <option>lands</option>
+          <option>shutters</option>
+          <option>Commercial Property</option>
+          <option>Resturant</option>
+          <option>others</option>
+        </select>
+      </div>
+      <div class="col-md-1 d-grid">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Featured Properties -->
+<div class="container featured">
+  <h2 class="f-title mb-4">Featured Property</h2>
+  <div class="row">
+    {% for i in feature %}
+    <div class="col-md-4">
+      <div class="cardn">
+        <a href="{% url 'property_detail' i.id %}">
+          <img src="{{ i.main_photo.url }}" alt="{{ i.title }}">
+        </a>
+        <h3 class="feature-topic">{{ i.title }}</h3>
+        <p class="location"><i class="fa-solid fa-location-dot"></i> {{ i.address }}</p>
         <div class="card-inner">
-            <p class="type"><i class="fa-solid fa-building"></i> {{i.property_type}} </p>
-            <p>|</p>
-            <p class="price"><i class="fa-solid fa-money-bill-1"></i>  Rs.{{i.price}}</p>
-        </div>   
+          <p class="type"><i class="fa-solid fa-building"></i> {{ i.property_type }}</p>
+          <p>|</p>
+          <p class="price"><i class="fa-solid fa-money-bill-1"></i> Rs. {{ i.price }}</p>
+        </div>
+      </div>
     </div>
     {% endfor %}
-    {% endif %}
+  </div>
 </div>
- </div>
+{% endif %}
 {% endblock content %}

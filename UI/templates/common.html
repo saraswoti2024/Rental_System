@@ -27,7 +27,7 @@
 <body>
     <!-- navbar starts-->
      <div class="navbar">
-        <a href="{% url 'home' %}"><h1 class="logo">RENTAL SERVICE</h1></a>
+        <a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt="" width="40px" height="40px"></a>
         <div class="navbar2">
           {% if request.user.is_authenticated %}
           {% if user.usertype == 'landlord' %}
@@ -69,7 +69,7 @@
 
           <div class="request">
               <a href="{% url 'request_room' %}"><button class="navbutton"><h2 class="navtitle2">Find me Room</h2></button></a>
-              <a href="{% url 'shifthome' %}"><butaton class="navbutton"><h2 class="navtitle2">Shift Home</h2></button></a>
+              <a href="{% url 'shifthome' %}"><button class="navbutton"><h2 class="navtitle2">Shift Home</h2></button></a>
           </div>
 
           <a href="{% url 'aboutus' %}"><h2 class="navtitle">ABOUT US</h2></a>
