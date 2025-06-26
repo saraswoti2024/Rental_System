@@ -36,14 +36,12 @@ class HomeView(View):
         propertytype = request.GET.get('propertytype')
         location = request.GET.get('location')
         
-        if title or price or propertytype or location:
+        if request.GET: #search
             data = property_post.objects.filter(is_approved=True)
             searched = True
             
             if title:
                 data = data.filter(title__icontains=title)
-            else:
-                data = property_post.objects.filter(is_approved=True)
             
             if price :
                 try:
@@ -51,18 +49,13 @@ class HomeView(View):
                         data = data.filter(price__gte=min_price, price__lte=max_price)
                 except:
                         pass  # Don't crash if input is bad
-            else:
-                data = property_post.objects.filter(is_approved=True)
+
             
             if propertytype :
                 data = data.filter(property_type__iexact=propertytype) 
-            else:
-                data = property_post.objects.filter(is_approved=True)
             
             if location :
                 data = data.filter(address__icontains=location) 
-            else:
-                data = property_post.objects.filter(is_approved=True) 
             
         context = {
             'data' : data,

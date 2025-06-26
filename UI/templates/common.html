@@ -27,7 +27,7 @@
 <body>
     <!-- navbar starts-->
      <div class="navbar">
-        <h1 class="logo">RENTAL SERVICE</h1>
+        <a href="{% url 'home' %}"><h1 class="logo">RENTAL SERVICE</h1></a>
         <div class="navbar2">
           {% if request.user.is_authenticated %}
           {% if user.usertype == 'landlord' %}

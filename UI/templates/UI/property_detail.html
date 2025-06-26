@@ -53,6 +53,7 @@
     <div class="d d-flex flex-wrap">
     <h1 class="property-title">{{ property.title }} </h1>
     <form method="post">
+      {% csrf_token %}
     <button class="btn btn-danger px-3 mx-5">Book</button>
      </form>
   </div>
