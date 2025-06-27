@@ -20,5 +20,7 @@ urlpatterns = [
     path('edit_ldashboard/<int:id>',edit_ldashboard,name="edit_ldashboard"),        
     path('property_detail/<int:id>',property_detail,name="property_detail"),        
     path('report/<int:id>',report,name="report"),        
-    path('profile/',profile,name="profile"),        
+    path('profile/',profile,name="profile"),      
+    path('send_inq/<int:property_id>', send_inquiry, name='send_inquiry'),
+    path('my-inquiries/', view_inquiries, name='view_inquiries'),          
 ]

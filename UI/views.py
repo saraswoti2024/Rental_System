@@ -12,6 +12,7 @@ from django.conf import settings
 # Create your views here.
 from accounts.models import CustomUser
 from django.contrib.auth.decorators import login_required
+from .forms import *
 
 
 def is_valid_image(file):
@@ -274,7 +275,7 @@ def edit_ldashboard(request,id):
         data = json.load(f)
         places = [f"{item['name']}, {item['city']}" for item in data]
         data = property_post.objects.get(id=id)
-        if request.method == 'POST' and request.FILES:
+        if request.method == 'POST' or request.FILES:
             data = property_post.objects.get(id=id)
             if 'title' in request.POST:
                 data.title = request.POST['title']
@@ -322,7 +323,7 @@ def edit_ldashboard(request,id):
             data.save()
             ActivityLog.objects.create(user=request.user,action =f'edited property({data.title})')
             messages.success(request,'Property edited successfully!')
-            return redirect('edit_ldashboard',data.id)
+            return redirect('ldashboard')
     except Exception as e:
         messages.error(request,f'{str(e)}')
         return redirect('edit_ldashboard',data.id)
@@ -370,6 +371,7 @@ def notify_admin_of_heavy_reports(property_id,count):
     emailmsg = EmailMessage(subject,message,from_email,recipient_list)
     emailmsg.send(fail_silently=False)
 
+    
 
 def profile(request):
     if request.user.user_type == 'landlord':
@@ -377,3 +379,24 @@ def profile(request):
     if request.user.user_type == 'rentseeker':
         Profile.objects.get_or_create(user=request.user)
     return render(request,'UI/profile.html')
+
+@login_required
+def send_inquiry(request, property_id):
+    property_obj = get_object_or_404(property_post, id=property_id)
+    if request.method == 'POST':
+        form = InquiryForm(request.POST)
+        if form.is_valid():
+            inquiry = form.save(commit=False)
+            inquiry.sender = request.user
+            inquiry.property = property_obj
+            inquiry.save()
+            return redirect('property_detail', id=property_id)
+    else:
+        form = InquiryForm()
+    return render(request, 'UI/send.html', {'form': form, 'property': property_obj})
+
+@login_required
+def view_inquiries(request):
+    my_properties = property_post.objects.filter(user=request.user)
+    inquiries = Inquiry.objects.filter(property__in=my_properties).order_by('-created_at')
+    return render(request, 'UI/inquiries.html', {'inquiries': inquiries})

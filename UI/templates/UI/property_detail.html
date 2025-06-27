@@ -94,10 +94,6 @@
   <section class="property-details">
     <div class="d-flex flex-wrap align-items-center mb-3">
       <h1 class="property-title me-auto">{{ property.title }}</h1>
-      <form method="post">
-        {% csrf_token %}
-        <button class="btn btn-danger px-4">Book</button>
-      </form>
     </div>
 
     <!-- Description -->
@@ -127,10 +123,20 @@
       {% endfor %}
     </ul>
 
+    <div class="mb-4">
+      <label for="desc"><strong>Posted By:</strong></label>
+      <p>Name:{{property.user.first_name}} {{property.user.last_name}}</p>
+      <p>username: {{property.user.username}}</p>
+      <p>Email: {{property.user.email}}</p>
+    </div>
+
+    <div class="d-flex gap-3 ">
+      <a href="{% url 'send_inquiry' property.id %}" class="btn btn-outline-primary">Send Message</a>
+    </div>
+
     <!-- Action Buttons -->
-    <div class="d-flex gap-3">
+    <div class="d-flex gap-3 my-4">
       <a href="{% url 'report' property.id %}" class="btn btn-outline-danger">🚩 Report</a>
-      <a href="#comments" class="btn btn-outline-primary">💬 Comment</a>
     </div>
   </section>
 </main>

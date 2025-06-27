@@ -101,3 +101,12 @@ class Fraud_Reports(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     image = models.ImageField(upload_to="profile_img")
+    
+class Inquiry(models.Model):
+    property = models.ForeignKey(property_post, on_delete=models.CASCADE)
+    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='sent_inquiries')  # RentSeeker
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Inquiry from {self.sender.username} to {self.property.user.username}'

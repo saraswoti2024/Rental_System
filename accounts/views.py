@@ -33,7 +33,7 @@ class Log_in(View):
                     if value.is_superuser or value.is_staff:
                         return redirect('/admin/')
                     elif value.usertype == 'landlord':
-                        return redirect('landlord_home')
+                        return redirect('home')
                     elif value.usertype == 'rentseeker':
                         return redirect('home')
                    

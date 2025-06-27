@@ -1,0 +1,78 @@
+{% extends "common.html" %}
+{% block content %}
+{% load static %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card_i shadow-lg border-0 rounded-4 p-4 p-md-5">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4 fw-bold text-primary">Send Inquiry for {{ property.title }}</h3>
+                    <p class="text-center text-muted mb-4">Please fill out the form below and the property owner will get in touch with you shortly.</p>
+
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label fw-semibold">{{ field.label }}</label>
+                                {% if field.field.widget.input_type == 'textarea' %}
+                                    <textarea class="form-control" id="{{ field.id_for_label }}" name="{{ field.html_name }}" rows="5" {% if field.field.required %}required{% endif %} placeholder="{{ field.label }}"></textarea>
+                                {% else %}
+                                    <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}" name="{{ field.html_name }}" value="{% if field.value %}{{ field.value }}{% endif %}" {% if field.field.required %}required{% endif %} placeholder="{{ field.label }}">
+                                {% endif %}
+                                {% if field.help_text %}
+                                    <div class="form-text text-muted">{{ field.help_text }}</div>
+                                {% endif %}
+                                {% for error in field.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-success btn-lg rounded-pill shadow-sm">
+                                Send Inquiry <i class="fas fa-paper-plane ms-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom styles to enhance Bootstrap */
+    .card_i .shadow-lg {
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important; /* Stronger shadow */
+    }
+
+    .form-label {
+        color: #343a40; /* Darker label text */
+    }
+
+    .form-control:focus {
+        border-color: #007bff; /* Bootstrap primary blue */
+        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Primary blue focus ring */
+    }
+
+    .btn-success {
+        background-color: #28a745; /* Standard success green */
+        border-color: #28a745;
+    }
+
+    .btn-success:hover {
+        background-color: #218838; /* Darker green on hover */
+        border-color: #1e7e34;
+    }
+
+    /* Adjust placeholder color for better visibility */
+    .form-control::placeholder {
+        color: #adb5bd;
+        opacity: 1; /* Firefox fix */
+    }
+</style>
+  
+{% endblock content %}
