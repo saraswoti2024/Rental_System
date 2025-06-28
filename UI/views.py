@@ -400,3 +400,13 @@ def view_inquiries(request):
     my_properties = property_post.objects.filter(user=request.user)
     inquiries = Inquiry.objects.filter(property__in=my_properties).order_by('-created_at')
     return render(request, 'UI/inquiries.html', {'inquiries': inquiries})
+
+def contact(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        Contact.objects.create(name=name,email=email,message=message)
+        messages.success(request,'send successfully!')
+        return redirect('contact')
+    return render(request,'UI/contactus.html')

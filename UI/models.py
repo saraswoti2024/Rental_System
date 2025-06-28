@@ -110,3 +110,8 @@ class Inquiry(models.Model):
 
     def __str__(self):
         return f'Inquiry from {self.sender.username} to {self.property.user.username}'
+
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()

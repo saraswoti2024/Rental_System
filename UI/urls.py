@@ -23,4 +23,5 @@ urlpatterns = [
     path('profile/',profile,name="profile"),      
     path('send_inq/<int:property_id>', send_inquiry, name='send_inquiry'),
     path('my-inquiries/', view_inquiries, name='view_inquiries'),          
+    path('contact/', contact, name='contact'),          
 ]

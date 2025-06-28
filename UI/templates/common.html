@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rental System</title>
 
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -22,6 +23,7 @@
     <link rel="stylesheet" href="{% static 'css/common.css' %}">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <link rel="stylesheet" href="{% static 'css/request.css' %}">
+
 
     <style>
         .navbar {
@@ -170,6 +172,7 @@
                     <a href="{% url 'shifthome' %}"><button class="navbutton"><h2 class="navtitle2">Shift Home</h2></button></a>
                 </div>
                 <a href="{% url 'aboutus' %}"><h2 class="navtitle">ABOUT US</h2></a>
+                <a href="{% url 'contact' %}"><h2 class="navtitle">CONTACT US</h2></a>
                 <a href="{% url 'log_in' %}"><h2 class="navtitle1">LOGIN</h2></a>
                 <a href="{% url 'register1' %}"><h2 class="navtitle1">REGISTER</h2></a>
             {% endif %}
