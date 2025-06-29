@@ -25,6 +25,7 @@ class HomeView(View):
     def post(self,request):
         pass
     def get(self,request): 
+        comments = Testimonals.objects.all()
         file_path = os.path.join(settings.BASE_DIR, 'UI/static/data/nepal_places.json')
         f = open(file_path, 'r', encoding='utf-8') 
         data_loc = json.load(f)
@@ -63,6 +64,7 @@ class HomeView(View):
             'feature' : feature,
             'searched' : searched,
            	'places' : places, 
+            'testimonals' : comments
         }
         return render(request,'UI/home.html',context)
 

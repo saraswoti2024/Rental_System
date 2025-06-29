@@ -115,3 +115,9 @@ class Contact(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     message = models.TextField()
+    
+class Testimonals(models.Model):
+        name = models.CharField(max_length=100)
+        comment = models.TextField()
+        user_type = models.CharField(max_length=100,null=True)
+        image = models.ImageField(upload_to="testimonals",null=True)

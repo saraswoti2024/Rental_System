@@ -35,3 +35,7 @@ class Fraud_Report(admin.ModelAdmin):
     def message_preview(self, obj):
         return obj.message[:50] + ('...' if len(obj.message) > 50 else '')
     message_preview.short_description = "Message"
+    
+@admin.register(Testimonals)
+class Testimonals(admin.ModelAdmin):
+    list_display = ['id','name','comment']
