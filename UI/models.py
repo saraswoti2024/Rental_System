@@ -121,3 +121,8 @@ class Testimonals(models.Model):
         comment = models.TextField()
         user_type = models.CharField(max_length=100,null=True)
         image = models.ImageField(upload_to="testimonals",null=True)
+
+class comment_post(models.Model):
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    property = models.ForeignKey(property_post,on_delete=models.CASCADE)
+    comment = models.TextField()

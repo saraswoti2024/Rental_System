@@ -331,9 +331,18 @@ def edit_ldashboard(request,id):
         return redirect('edit_ldashboard',data.id)
     return render(request,'UI/edit.html',{'data':data,'places':places})
 
+@login_required(login_url='log_in')
 def property_detail(request,id):
     propertyy = property_post.objects.get(id=id)
-    return render(request,'UI/property_detail.html',{'property' : propertyy})
+    if request.method == 'POST':
+        review = request.POST.get('review')
+        comment_post.objects.create(user=request.user,property=propertyy,comment=review)
+    comments = comment_post.objects.all()
+    context = {
+        'property' : propertyy,
+        'comments' : comments,
+    }
+    return render(request,'UI/property_detail.html',context)
 
 @login_required(login_url='log_in')
 def report(request,id):
@@ -412,3 +421,4 @@ def contact(request):
         messages.success(request,'send successfully!')
         return redirect('contact')
     return render(request,'UI/contactus.html')
+        

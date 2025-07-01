@@ -1,145 +1,144 @@
 {% extends "common.html" %}
-
 {% block content %}
-<style>
-  .carousel-inner {
-    max-height: 500px;
-  }
+{% load static %}
+<main class="max-w-6xl mx-auto px-4 py-10" id="main" data-id="{{ property.id }}">
 
-  .carousel-inner img {
-    width: 100%;
-    object-fit: cover; /* Ensures full image is visible */
-    border-radius: 10px;
-    background: #f8f9fa;
-  }
-
-  .carousel-inner img {
-  max-height: 500px;
-  width: auto;
-  object-fit: contain;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 10px;
-}
-  .property-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-right: auto;
-  }
-
-  .property-description {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-  }
-
-  .property-price {
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-
-  .list-group-item {
-    font-size: 1rem;
-  }
-
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 50%;
-  }
-</style>
-
-<main class="container my-5" id="main" data-id="{{ property.id }}">
-
-  <!-- Image Carousel -->
-  <section id="propertyImage" class="mb-4">
-    <div id="propertyCarousel" class="carousel slide shadow-sm" data-bs-ride="carousel">
-      <div class="carousel-inner rounded">
+  <!-- Carousel (Bootstrap-based with Tailwind styling) -->
+  <section class="mb-10">
+    <div id="propertyCarousel" class="carousel slide rounded-lg overflow-hidden shadow" data-bs-ride="carousel">
+      <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="{{ property.main_photo.url }}" class="d-block w-100" alt="Main photo">
+          <img src="{{ property.main_photo.url }}" class="w-full h-[500px] object-contain bg-gray-100" alt="Main photo">
         </div>
         {% if property.photo1 %}
         <div class="carousel-item">
-          <img src="{{ property.photo1.url }}" class="d-block w-100" alt="Photo 1">
+          <img src="{{ property.photo1.url }}" class="w-full h-[500px] object-contain bg-gray-100" alt="Photo 1">
         </div>
         {% endif %}
         {% if property.photo2 %}
         <div class="carousel-item">
-          <img src="{{ property.photo2.url }}" class="d-block w-100" alt="Photo 2">
+          <img src="{{ property.photo2.url }}" class="w-full h-[500px] object-contain bg-gray-100" alt="Photo 2">
         </div>
         {% endif %}
         {% if property.photo3 %}
         <div class="carousel-item">
-          <img src="{{ property.photo3.url }}" class="d-block w-100" alt="Photo 3">
+          <img src="{{ property.photo3.url }}" class="w-full h-[500px] object-contain bg-gray-100" alt="Photo 3">
         </div>
         {% endif %}
         {% if property.photo4 %}
         <div class="carousel-item">
-          <img src="{{ property.photo4.url }}" class="d-block w-100" alt="Photo 3">
+          <img src="{{ property.photo4.url }}" class="w-full h-[500px] object-contain bg-gray-100" alt="Photo 4">
         </div>
         {% endif %}
       </div>
+
+      <!-- Carousel controls -->
       <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="carousel-control-prev-icon bg-dark rounded-full p-3" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
       <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="carousel-control-next-icon bg-dark rounded-full p-3" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
     </div>
   </section>
 
-  <!-- Property Details -->
-  <section class="property-details">
-    <div class="d-flex flex-wrap align-items-center mb-3">
-      <h1 class="property-title me-auto">{{ property.title }}</h1>
-    </div>
+  <!-- Property Info -->
+  <section class="space-y-6">
+    <h1 class="text-3xl font-bold">{{ property.title }}</h1>
+    <p class="text-gray-700">{{ property.desc|safe }}</p>
 
-    <!-- Description -->
-    <p class="property-description">{{ property.desc|safe }}</p>
+    <p><strong>📍 Location:</strong> {{ property.address }}</p>
 
-    <!-- Location -->
-    <p class="mb-2"><strong>Location:</strong> {{ property.address }}</p>
+    <div class="text-green-600 text-2xl font-semibold">Rs. {{ property.price }}</div>
 
-    <!-- Price -->
-    <div class="property-price text-success mb-4">
-      Rs. {{ property.price }}
-    </div>
-
-    <!-- Extra Info -->
-    <div class="mb-4">
-      <label for="desc"><strong>Description:</strong></label>
-      <p>{{ property.extra_info }}</p>
+    <div>
+      <h2 class="font-semibold">Description:</h2>
+      <p class="text-gray-700">{{ property.extra_info }}</p>
     </div>
 
     <!-- Facilities -->
-    <h5 class="mt-4">Facilities:</h5>
-    <ul class="list-group mb-4">
-      {% for facility in property.facilities %}
-      <li class="list-group-item">✔️ {{ facility }}</li>
-      {% empty %}
-      <li class="list-group-item text-muted">No facilities listed.</li>
-      {% endfor %}
-    </ul>
-
-    <div class="mb-4">
-      <label for="desc"><strong>Posted By:</strong></label>
-      <p>Name:{{property.user.first_name}} {{property.user.last_name}}</p>
-      <p>username: {{property.user.username}}</p>
-      <p>Email: {{property.user.email}}</p>
+    <div>
+      <h2 class="font-semibold">Facilities:</h2>
+      <ul class="list-disc pl-6 text-gray-700 space-y-1">
+        {% for facility in property.facilities %}
+          <li>{{ facility }}</li>
+        {% empty %}
+          <li class="text-gray-400">No facilities listed.</li>
+        {% endfor %}
+      </ul>
     </div>
 
-    <div class="d-flex gap-3 ">
-      <a href="{% url 'send_inquiry' property.id %}" class="btn btn-outline-primary">Send Message</a>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="d-flex gap-3 my-4">
-      <a href="{% url 'report' property.id %}" class="btn btn-outline-danger">🚩 Report</a>
+    <!-- Posted By -->
+    <div class="bg-gray-100 p-4 rounded flex items-center gap-4">
+    
+    {% if property.user.profile.image  %}
+    <img src="{{ property.user.profile.image.url }}" alt="Profile"
+    class="w-16 h-16 rounded-full object-cover border border-gray-300" />
+    {% else %}
+    <img src="{% static 'images/profilee.jpg' %}" alt="Profile"
+    class="w-16 h-16 rounded-full object-cover border border-gray-300" />
+    {% endif %}
+    
+      <div>
+        <h3 class="text-lg font-medium mb-1">Posted By:</h3>
+        <p><strong>Name:</strong> {{ property.user.first_name }} {{ property.user.last_name }}</p>
+        <p><strong>Username:</strong> {{ property.user.username }}</p>
+        <p><strong>Email:</strong> {{ property.user.email }}</p>
+      </div>
     </div>
   </section>
+
+  <!-- Comments Section -->
+  <section class="mt-10">
+    <h2 class="text-xl font-semibold mb-4">Comments</h2>
+
+    <form action="" method="post" class="space-y-3 mb-6">
+      {% csrf_token %}
+      <input type="text" name="review" placeholder="Write a comment..." class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Comment</button>
+    </form>
+
+
+
+    {% if comments %}
+      <div class="space-y-4">
+        {% for i in comments %}
+        <div class="bg-white p-4 border rounded shadow flex items-start gap-4">
+          {% if i.user.profile.image %}
+          <img src="{{ i.user.profile.image.url }}" alt="User Image"
+          class="w-12 h-12 rounded-full object-cover border border-gray-300" />
+
+          {% else %}
+          <img src="{% static 'images/profilee.jpg' %}" alt="User Image"
+          class="w-12 h-12 rounded-full object-cover border border-gray-300" />
+          {% endif %}
+
+        
+          <div>
+            <p class="text-sm text-gray-600 font-medium">{{ i.user }}</p>
+            <p class="text-gray-800">{{ i.comment }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-gray-400">No comments yet.</p>
+    {% endif %}
+  </section>
+
+  <!-- Buttons -->
+  <div class="flex flex-wrap gap-4 mt-10">
+    <a href="{% url 'send_inquiry' property.id %}" class="px-4 py-2 border border-blue-500 text-blue-600 rounded hover:bg-blue-50">
+      📩 Send Message
+    </a>
+    <a href="{% url 'report' property.id %}" class="px-4 py-2 border border-red-500 text-red-600 rounded hover:bg-red-50">
+      🚩 Report
+    </a>
+  </div>
 </main>
 
+<!-- Bootstrap JS for Carousel functionality -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}
