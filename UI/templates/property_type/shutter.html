@@ -1,0 +1,45 @@
+{% extends "common.html" %}
+{% block content %}
+{% load static %}
+
+<div class="container mx-auto px-4 py-12">
+    <h2 class="text-4xl font-extrabold text-center text-gray-900 mb-10 tracking-tight">
+        Discover Your Next Property
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {% for i in shutter %}
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 overflow-hidden group">
+            <a href="{% url 'property_detail' i.id %}" class="block relative h-56 w-full">
+                <img src="{{ i.main_photo.url }}" alt="{{ i.title }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div class="absolute bottom-4 left-4 text-white text-lg font-bold">Rs. {{ i.price }}</div>
+            </a>
+            <div class="p-6">
+                <h3 class="text-2xl font-bold text-gray-800 mb-2 leading-tight">
+                    <a href="{% url 'property_detail' i.id %}" class="hover:text-blue-600 transition-colors duration-200">{{ i.title }}</a>
+                </h3>
+                <p class="text-gray-600 mb-4 flex items-center">
+                    <i class="fa-solid fa-location-dot text-blue-500 mr-2"></i> {{ i.address }}
+                </p>
+                <div class="flex items-center justify-between text-gray-700 text-base border-t pt-4 mt-4">
+                    <span class="flex items-center">
+                        <i class="fa-solid fa-building text-gray-500 mr-2"></i> {{ i.property_type }}
+                    </span>
+                    <span class="font-bold text-gray-400">|</span>
+                    <span class="flex items-center">
+                        <i class="fa-solid fa-tag text-gray-500 mr-2"></i> {{ i.property_type }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-10">
+            <p class="text-2xl text-gray-600 font-semibold mb-4">No properties found at the moment.</p>
+            <p class="text-gray-500">Please check back later or adjust your search criteria.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

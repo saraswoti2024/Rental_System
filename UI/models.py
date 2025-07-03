@@ -126,3 +126,8 @@ class comment_post(models.Model):
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     property = models.ForeignKey(property_post,on_delete=models.CASCADE)
     comment = models.TextField()
+    date = models.DateField(default=current_date)
+    time = models.TimeField(default=one_hour_later)
+    
+# class category_properties(models.Model):
+#     name_c = models.CharField(max_length=100)

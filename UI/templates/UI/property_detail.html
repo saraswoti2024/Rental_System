@@ -103,29 +103,35 @@
 
 
     {% if comments %}
-      <div class="space-y-4">
-        {% for i in comments %}
-        <div class="bg-white p-4 border rounded shadow flex items-start gap-4">
-          {% if i.user.profile.image %}
-          <img src="{{ i.user.profile.image.url }}" alt="User Image"
-          class="w-12 h-12 rounded-full object-cover border border-gray-300" />
-
-          {% else %}
-          <img src="{% static 'images/profilee.jpg' %}" alt="User Image"
-          class="w-12 h-12 rounded-full object-cover border border-gray-300" />
-          {% endif %}
-
+    <div class="space-y-4">
+      {% for i in comments %}
+      <div class="bg-white p-4 border rounded shadow flex items-start gap-4">
         
-          <div>
-            <p class="text-sm text-gray-600 font-medium">{{ i.user }}</p>
-            <p class="text-gray-800">{{ i.comment }}</p>
-          </div>
+        {% if i.user.profile.image %}
+        <img src="{{ i.user.profile.image.url }}" alt="User Image"
+          class="w-12 h-12 rounded-full object-cover border border-gray-300" />
+        {% else %}
+        <img src="{% static 'images/profilee.jpg' %}" alt="User Image"
+          class="w-12 h-12 rounded-full object-cover border border-gray-300" />
+        {% endif %}
+  
+        <div>
+          <p class="text-sm text-gray-600 font-medium">{{ i.user }}</p>
+          <p class="text-gray-800">{{ i.comment }}</p>
+  
+          <!-- 🗓️ Add date and time here -->
+          <p class="text-xs text-gray-400 mt-1">
+            {{ i.date }} at {{ i.time|time:"h:i A" }}
+          </p>
         </div>
-        {% endfor %}
+  
       </div>
-    {% else %}
-      <p class="text-gray-400">No comments yet.</p>
-    {% endif %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-gray-400">No comments yet.</p>
+  {% endif %}
+  
   </section>
 
   <!-- Buttons -->

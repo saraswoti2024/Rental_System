@@ -22,8 +22,6 @@ def is_valid_video(file):
     return file.content_type.startswith('video/')
 
 class HomeView(View):
-    def post(self,request):
-        pass
     def get(self,request): 
         comments = Testimonals.objects.all()
         file_path = os.path.join(settings.BASE_DIR, 'UI/static/data/nepal_places.json')
@@ -106,7 +104,7 @@ def request_room_view(request):
     except Exception as e:
         messages.error(request,f'{str(e)}')
         return redirect('request_room')       
-    return render(request,'UI/request.html')
+    return render(request,'forms/request.html')
 
 
 
@@ -150,7 +148,7 @@ def shifthome(request):
     except Exception as e:
         messages.error(request,f'{str(e)}')
         return redirect('shifthome')
-    return render(request,'UI/shifthome.html')
+    return render(request,'forms/shifthome.html')
 
 
 def aboutus(request):
@@ -199,11 +197,9 @@ def addproperty(request):
         ActivityLog.objects.create(user=request.user,action =f'Added property ({data.title})')
         messages.success(request,'Property added successfully!')
         return redirect('addproperty')
-    return render(request,'UI/property_post.html',{'places':places})
+    return render(request,'forms/property_post.html',{'places':places})
 
-@landlord_required
-def landlord_home(request):
-    return render(request,'UI/home_landlord.html')
+
 
 @landlord_required
 def landlord_dashboard(request):
@@ -217,7 +213,7 @@ def landlord_dashboard(request):
         'property' : data,
         
     }
-    return render(request,'UI/Ldashboard.html',context)
+    return render(request,'landlord/Ldashboard.html',context)
 
 def delete_property(request,id):
      data = get_object_or_404(property_post, id=id) 
@@ -229,7 +225,7 @@ def house(request):
     context = {
         'houses' : data
     }
-    return render(request,'UI/house.html',context)
+    return render(request,'property_type/house.html',context)
 
 def flat(request):
     
@@ -237,7 +233,7 @@ def flat(request):
     context = {
         'flat' : data
     }
-    return render(request,'UI/Flat.html',context)
+    return render(request,'property_type/Flat.html',context)
 
 def officespace(request):
     
@@ -245,14 +241,14 @@ def officespace(request):
     context = {
         'office' : data
     }
-    return render(request,'UI/office.html',context)
+    return render(request,'property_type/office.html',context)
 
 def land(request):
     data = property_post.objects.filter(property_type="lands",is_approved=True).order_by('-date')
     context = {
         'land' : data
     }
-    return render(request,'UI/land.html',context)
+    return render(request,'property_type/land.html',context)
 
 def shutter(request):
     
@@ -260,7 +256,7 @@ def shutter(request):
     context = {
         'shutter' : data
     }
-    return render(request,'UI/shutter.html',context)
+    return render(request,'property_type/shutter.html',context)
 
 def Room(request):
     
@@ -268,7 +264,7 @@ def Room(request):
     context = {
         'room' : data
     }
-    return render(request,'UI/Room.html',context)
+    return render(request,'property_type/Room.html',context)
 
 def edit_ldashboard(request,id):
     try:
@@ -329,7 +325,7 @@ def edit_ldashboard(request,id):
     except Exception as e:
         messages.error(request,f'{str(e)}')
         return redirect('edit_ldashboard',data.id)
-    return render(request,'UI/edit.html',{'data':data,'places':places})
+    return render(request,'landlord/edit.html',{'data':data,'places':places})
 
 @login_required(login_url='log_in')
 def property_detail(request,id):
@@ -362,7 +358,7 @@ def report(request,id):
             propertyy.save()
         messages.success(request,'Reported Sucessfully!')
         return redirect('home')
-    return render(request,'UI/report.html',{'property' : propertyy})
+    return render(request,'forms/report.html',{'property' : propertyy})
 
 def notify_admin_of_heavy_reports(property_id,count):
     subject = f"🚨 ALERT: Property '{property_id.title}' reported {count} times!"
@@ -382,13 +378,17 @@ def notify_admin_of_heavy_reports(property_id,count):
     emailmsg = EmailMessage(subject,message,from_email,recipient_list)
     emailmsg.send(fail_silently=False)
 
-    
+def profile_landlord(request):
+    return render(request,'landlord/profile_landlord.html')
 
 def profile(request):
     if request.user.user_type == 'landlord':
         Profile.objects.get_or_create(user=request.user)
+        return redirect('profile_landlord')
+    
     if request.user.user_type == 'rentseeker':
         Profile.objects.get_or_create(user=request.user)
+        return redirect('profile')
     return render(request,'UI/profile.html')
 
 @login_required
@@ -404,13 +404,13 @@ def send_inquiry(request, property_id):
             return redirect('property_detail', id=property_id)
     else:
         form = InquiryForm()
-    return render(request, 'UI/send.html', {'form': form, 'property': property_obj})
+    return render(request, 'forms/send.html', {'form': form, 'property': property_obj})
 
 @login_required
 def view_inquiries(request):
     my_properties = property_post.objects.filter(user=request.user)
     inquiries = Inquiry.objects.filter(property__in=my_properties).order_by('-created_at')
-    return render(request, 'UI/inquiries.html', {'inquiries': inquiries})
+    return render(request, 'forms/inquiries.html', {'inquiries': inquiries})
 
 def contact(request):
     if request.method == 'POST':
@@ -420,5 +420,5 @@ def contact(request):
         Contact.objects.create(name=name,email=email,message=message)
         messages.success(request,'send successfully!')
         return redirect('contact')
-    return render(request,'UI/contactus.html')
+    return render(request,'forms/contactus.html')
         

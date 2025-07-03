@@ -1,0 +1,140 @@
+{% extends "common.html" %}
+{% block content %}
+{% load static %}
+
+<div class="max-w-3xl mx-auto mt-10 bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 p-8 rounded-2xl shadow-lg">
+  <form action="{% url 'addproperty' %}" method="post" enctype="multipart/form-data" class="space-y-6">
+    {% csrf_token %}
+
+    {% if messages %}
+      {% for m in messages %}
+        <div class="bg-cyan-100 text-cyan-800 px-4 py-2 rounded-md font-medium shadow">{{ m }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <h2 class="text-2xl font-bold text-blue-800 text-center mb-6">Add Property Details</h2>
+
+    <div>
+      <label for="title" class="block text-sm font-semibold text-blue-700">Title</label>
+      <input type="text" id="title" name="title" placeholder="Enter here..." required
+             class="mt-1 w-full px-4 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white">
+    </div>
+
+    <div>
+      <label for="phone" class="block text-sm font-semibold text-blue-700">Phone</label>
+      <input type="text" id="phone" name="phone" placeholder="Nepal Number" required
+             class="mt-1 w-full px-4 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white">
+    </div>
+
+    <div>
+      <label for="location" class="block text-sm font-semibold text-blue-700">Location</label>
+      <select id="location" name="location" required
+              class="mt-1 w-full px-4 py-2 border border-blue-200 rounded-lg bg-white">
+        <option value="">Select or type</option>
+        {% for i in places %}
+          <option>{{ i }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <label for="area" class="block text-sm font-semibold text-blue-700">Tole/Area</label>
+      <input type="text" id="area" name="area" placeholder="e.g., Samakhushi"
+             class="mt-1 w-full px-4 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white">
+    </div>
+
+    <!-- Images Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-semibold text-blue-700">Main Photo</label>
+        <input type="file" name="main_photo" accept="image/*" required class="mt-1 block w-full text-sm text-blue-800">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-blue-700">Photo 1 (if any)</label>
+        <input type="file" name="photo1" accept="image/*" class="mt-1 block w-full text-sm text-blue-800" required>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-blue-700">Photo 2 (if any)</label>
+        <input type="file" name="photo2" accept="image/*" class="mt-1 block w-full text-sm text-blue-800" >
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-blue-700">Photo 3 (if any)</label>
+        <input type="file" name="photo3" accept="image/*" class="mt-1 block w-full text-sm text-blue-800">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-blue-700">Photo 4 (if any)</label>
+        <input type="file" name="photo4" accept="image/*" class="mt-1 block w-full text-sm text-blue-800">
+      </div>
+    </div>
+
+    <div>
+      <label for="video" class="block text-sm font-semibold text-blue-700">Video</label>
+      <input type="file" name="video" accept="video/*" class="mt-1 block w-full text-sm text-blue-800">
+    </div>
+
+    <div>
+      <label for="propertytype" class="block text-sm font-semibold text-blue-700">Property Type</label>
+      <select id="propertytype" name="propertytype" required
+              class="mt-1 w-full px-4 py-2 border border-blue-200 rounded-lg bg-white">
+        <option value="">Select or type</option>
+        <option>Room</option>
+        <option>Flat</option>
+        <option>House</option>
+        <option>office_space</option>
+        <option>lands</option>
+        <option>shutters</option>
+        <option>Commercial_Property</option>
+        <option>Resturant</option>
+        <option>others</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="price" class="block text-sm font-semibold text-blue-700">Property Price</label>
+      <input type="number" id="price" name="price" placeholder="Eg. 5000" required
+             class="mt-1 w-full px-4 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white">
+    </div>
+
+    <div>
+      <label class="block text-sm font-semibold text-blue-700">Facilities</label>
+      <div class="mt-2 grid grid-cols-2 gap-2 text-sm text-blue-800">
+        <label><input type="checkbox" name="facilities[]" value="GYM" class="mr-2">GYM</label>
+        <label><input type="checkbox" name="facilities[]" value="Swimming Pool" class="mr-2">Swimming Pool</label>
+        <label><input type="checkbox" name="facilities[]" value="Hospital" class="mr-2">Hospital</label>
+        <label><input type="checkbox" name="facilities[]" value="Banquet Hall" class="mr-2">Banquet Hall</label>
+        <label><input type="checkbox" name="facilities[]" value="School" class="mr-2">School</label>
+        <label><input type="checkbox" name="facilities[]" value="College" class="mr-2">College</label>
+      </div>
+    </div>
+
+    <div>
+      <label for="message" class="block text-sm font-semibold text-blue-700">Description</label>
+      <textarea id="message" name="message" placeholder="Description about the property"
+                class="mt-1 w-full px-4 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white h-28 resize-none"></textarea>
+    </div>
+
+    <div class="text-center pt-4">
+      <button type="submit"
+              class="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold px-6 py-2 rounded-full shadow-md transition-all duration-300">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Optional select2 setup -->
+<script>
+  $(document).ready(function () {
+    $('#location').select2({
+      placeholder: "Select or type",
+      allowClear: true
+    });
+
+    $('#propertytype').select2({
+      placeholder: "Select or type",
+      allowClear: true
+    });
+  });
+</script>
+
+{% endblock content %}

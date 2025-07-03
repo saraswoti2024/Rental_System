@@ -1,0 +1,237 @@
+{% extends "common.html" %}
+{% block content %}
+
+<div class="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl w-full bg-white p-8 rounded-lg shadow-xl">
+        <h1 class="text-3xl font-extrabold text-gray-900 text-center mb-8">
+            Get Your Moving Quote
+        </h1>
+
+        <form action="{% url 'shifthome' %}" method="post" class="space-y-6">
+            {% csrf_token %}
+
+            {# Django Messages #}
+            {% if messages %}
+                <div class="space-y-2">
+                    {% for i in messages %}
+                        <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded" role="alert">
+                            {{ i }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {# Type/Size Select #}
+            <div>
+                <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Type/Size of Property</label>
+                <select id="type" name="type" required
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm">
+                    <option value="">Please select</option>
+                    <option>Office</option>
+                    <option>House</option>
+                    <option>Flat</option>
+                    <option>Studio</option>
+                    <option>Room</option>
+                    <option>Apartment</option>
+                    <option>other</option>
+                </select>
+            </div>
+
+            {# Locations & Contact Info Grid #}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="location1" class="block text-sm font-medium text-gray-700 mb-1">Pick Up Location</label>
+                    <input type="text" name="location1" id="location1" required
+                           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                           placeholder="e.g., Kathmandu, Thamel">
+                </div>
+                <div>
+                    <label for="location2" class="block text-sm font-medium text-gray-700 mb-1">Drop Off Location</label>
+                    <input type="text" name="location2" id="location2" required
+                           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                           placeholder="e.g., Lalitpur, Patan">
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <input type="tel" name="phone" id="phone" placeholder="e.g., 98XXXXXXXX" required
+                           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" name="email" id="email" required
+                           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                           placeholder="e.g., your@example.com">
+                </div>
+            </div>
+
+            {# Item Counters Grid #}
+            <h2 class="text-xl font-semibold text-gray-800 pt-4 border-t border-gray-200">Number of Items</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {# TV Counter #}
+                <div class="flex flex-col">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">No. of TV</label>
+                    <div class="flex items-center space-x-2">
+                        <button type="button" onclick="changeCount('tv', -1)"
+                                class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition duration-150 ease-in-out">
+                            -
+                        </button>
+                        <span id="tv-display" class="w-8 text-center text-lg font-medium text-gray-900">0</span>
+                        <button type="button" onclick="changeCount('tv', 1)"
+                                class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition duration-150 ease-in-out">
+                            +
+                        </button>
+                        <input type="hidden" name="tv" id="tv" value="0">
+                    </div>
+                </div>
+
+                {# Bed Counter #}
+                <div class="flex flex-col">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">No. of Bed</label>
+                    <div class="flex items-center space-x-2">
+                        <button type="button" onclick="changeCount('bed', -1)"
+                                class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition duration-150 ease-in-out">
+                            -
+                        </button>
+                        <span id="bed-display" class="w-8 text-center text-lg font-medium text-gray-900">0</span>
+                        <button type="button" onclick="changeCount('bed', 1)"
+                                class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition duration-150 ease-in-out">
+                            +
+                        </button>
+                        <input type="hidden" name="bed" id="bed" value="0">
+                    </div>
+                </div>
+
+                {# Cupboard Counter #}
+                <div class="flex flex-col">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">No. of Cupboard</label>
+                    <div class="flex items-center space-x-2">
+                        <button type="button" onclick="changeCount('cupboard', -1)"
+                                class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition duration-150 ease-in-out">
+                            -
+                        </button>
+                        <span id="cupboard-display" class="w-8 text-center text-lg font-medium text-gray-900">0</span>
+                        <button type="button" onclick="changeCount('cupboard', 1)"
+                                class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition duration-150 ease-in-out">
+                            +
+                        </button>
+                        <input type="hidden" name="cupboard" id="cupboard" value="0">
+                    </div>
+                </div>
+
+                {# Sofa Counter #}
+                <div class="flex flex-col">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">No. of Sofa</label>
+                    <div class="flex items-center space-x-2">
+                        <button type="button" onclick="changeCount('sofa', -1)"
+                                class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition duration-150 ease-in-out">
+                            -
+                        </button>
+                        <span id="sofa-display" class="w-8 text-center text-lg font-medium text-gray-900">0</span>
+                        <button type="button" onclick="changeCount('sofa', 1)"
+                                class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition duration-150 ease-in-out">
+                            +
+                        </button>
+                        <input type="hidden" name="sofa" id="sofa" value="0">
+                    </div>
+                </div>
+
+                {# Table Counter #}
+                <div class="flex flex-col">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">No. of Table</label>
+                    <div class="flex items-center space-x-2">
+                        <button type="button" onclick="changeCount('table', -1)"
+                                class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition duration-150 ease-in-out">
+                            -
+                        </button>
+                        <span id="table-display" class="w-8 text-center text-lg font-medium text-gray-900">0</span>
+                        <button type="button" onclick="changeCount('table', 1)"
+                                class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition duration-150 ease-in-out">
+                            +
+                        </button>
+                        <input type="hidden" name="table" id="table" value="0">
+                    </div>
+                </div>
+            </div>
+
+            {# Booking Type Radios #}
+            <div class="pt-4 border-t border-gray-200">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Booking Type</label>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="booking_type" value="instant" checked
+                               class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300" id="instant-radio">
+                        <span class="ml-2 text-gray-700">Instant Booking</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="booking_type" value="schedule"
+                               class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300" id="schedule-radio">
+                        <span class="ml-2 text-gray-700">Schedule For Later</span>
+                    </label>
+                </div>
+            </div>
+
+            {# Scheduled Fields (Hidden by default) #}
+            <div id="schedule-fields" class="grid grid-cols-1 md:grid-cols-2 gap-6" style="display: none;">
+                <div>
+                    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Schedule Date</label>
+                    <input type="date" name="date" id="date"
+                           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="time" class="block text-sm font-medium text-gray-700 mb-1">Select Time</label>
+                    <input type="time" name="time" id="time"
+                           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+            </div>
+
+            {# Message Textarea #}
+            <div>
+                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Additional Message / Special Instructions</label>
+                <textarea name="message" id="message" rows="4"
+                          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                          placeholder="e.g., "Need extra care for fragile items, or mention any specific access issues."></textarea>
+            </div>
+
+            {# Submit Button #}
+            <div class="text-center pt-4">
+                <button type="submit"
+                        class="inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-150 ease-in-out">
+                    Ask For Quote
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // JavaScript for toggling schedule fields
+    const instantRadio = document.getElementById('instant-radio');
+    const scheduleRadio = document.getElementById('schedule-radio');
+    const scheduleFields = document.getElementById('schedule-fields');
+
+    function toggleScheduleFields() {
+        if (scheduleRadio.checked) {
+            scheduleFields.style.display = 'grid'; // Use 'grid' for Tailwind's grid system
+        } else {
+            scheduleFields.style.display = 'none';
+        }
+    }
+
+    instantRadio.addEventListener('change', toggleScheduleFields);
+    scheduleRadio.addEventListener('change', toggleScheduleFields);
+
+    // Initial check when the page loads
+    toggleScheduleFields();
+
+    // JavaScript for counter buttons
+    function changeCount(id, delta) {
+        const display = document.getElementById(`${id}-display`);
+        const input = document.getElementById(id);
+        let count = parseInt(input.value) + delta;
+        if (count < 0) count = 0; // Ensure count doesn't go below zero
+        display.textContent = count;
+        input.value = count;
+    }
+</script>
+
+{% endblock content %}
